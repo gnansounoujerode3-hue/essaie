@@ -11,8 +11,9 @@ dist/
 .mypy_cache/
 .ruff_cache/
 
-# Sorties de production
-output/
+# Sorties de production (seul le rendu de démonstration est versionné)
+output/*
+!output/3_erreurs_qui_tuent_tes_vues.mp4
 !output/.gitkeep
 assets/fonts/fonts.conf
 image-search/
