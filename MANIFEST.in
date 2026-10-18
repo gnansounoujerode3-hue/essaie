@@ -1,0 +1,10 @@
+include README.md METHOD.md CHEATSHEET.md requirements.txt
+recursive-include skills *.md *.json
+recursive-include assets/fonts *.ttf
+recursive-include assets/music *.mp3
+recursive-include assets/sfx *.mp3
+recursive-include assets/media *.jpg *.jpeg *.png *.webp *.md
+recursive-include assets/audio *.mp3 *.wav
+recursive-include shortsforge/studio *.html *.css *.js
+recursive-include shortsforge/skill_library *.md *.json
+recursive-include shortsforge/bundled_assets *.ttf *.mp3

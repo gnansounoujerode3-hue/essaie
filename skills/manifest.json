@@ -1,0 +1,402 @@
+{
+  "version": "1.0.0",
+  "count": 13,
+  "skills": [
+    {
+      "id": "audio-mixmaster",
+      "name": "Mixeur Audio",
+      "description": "Monter la bande-son d'un Short : voix isolée, musique tendance duckée, bruitages au rythme des coupes.",
+      "version": "1.0.0",
+      "tags": [
+        "audio",
+        "voix",
+        "musique",
+        "sfx",
+        "mixage"
+      ],
+      "when_to_use": "Dès que le plan de coupe est figé. L'audio porte 50 % de la perception de qualité.",
+      "inputs": [
+        "Voice-over",
+        "Nappe musicale (ou générée)",
+        "Liste des plans (pour caler les bruitages)"
+      ],
+      "outputs": [
+        "Mixage final normalisé (-14 LUFS)",
+        "Liste des bruitages avec timecodes",
+        "Check-list de propreté sonore"
+      ],
+      "checklist": [
+        "Voix au centre, sans bruit de fond, compressée",
+        "Musique 12 à 20 dB sous la voix",
+        "Ducking automatique de la musique sous la parole",
+        "4 à 8 bruitages, jamais plus de 2 par plan",
+        "Loudness intégré ≈ -14 LUFS, true peak ≤ -1,5 dBFS",
+        "0,2 s de silence avant le hook (le vide attire l'oreille)"
+      ],
+      "path": "audio-mixmaster/SKILL.md"
+    },
+    {
+      "id": "brand-voice",
+      "name": "Voix de Marque",
+      "description": "Adapter le ton, le vocabulaire et l'identité visuelle d'un Short à une marque précise.",
+      "version": "1.0.0",
+      "tags": [
+        "marque",
+        "ton",
+        "identité",
+        "cohérence"
+      ],
+      "when_to_use": "Avant le script (cadre) et à chaque déclinaison (couleur, format, durée).",
+      "inputs": [
+        "Charte de marque (ton, couleurs, polices, vocabulaire)",
+        "Audience cible",
+        "Objectif commercial"
+      ],
+      "outputs": [
+        "Fiche de marque opérationnelle (tokens)",
+        "Règles de ton appliquées au script",
+        "CharteShortSpec (couleurs/polices prêtes à l'emploi)"
+      ],
+      "checklist": [
+        "2 couleurs max pour le texte à l'écran (primaire + accent)",
+        "1 police d'affichage + 1 police de sous-titre",
+        "Vocabulaire de la marque respecté (pas de jargon hors charte)",
+        "Aucun élément graphique concurrent du logo",
+        "Variantes de marque (couleur) prêtes pour A/B"
+      ],
+      "path": "brand-voice/SKILL.md"
+    },
+    {
+      "id": "broll-curator",
+      "name": "Curator de B-Roll",
+      "description": "Sélectionner, produire et incruster les plans d'illustration qui rendent une vidéo vivante sans surcharger.",
+      "version": "1.0.0",
+      "tags": [
+        "b-roll",
+        "visuels",
+        "overlays",
+        "direction artistique"
+      ],
+      "when_to_use": "Après le plan de coupe, en parallèle de la recherche de sources.",
+      "inputs": [
+        "Plan de coupe",
+        "Thème et univers visuel de la marque"
+      ],
+      "outputs": [
+        "Liste des B-rolls (image ou clip) avec position et durée",
+        "Autocollants et éléments graphiques",
+        "Plan d'illustration de ce qui manque"
+      ],
+      "checklist": [
+        "1 B-roll maximum par plan",
+        "B-roll toujours en périphérie (haut/bas), jamais au centre du texte",
+        "Coins arrondis + liseré blanc (sensation de « carte »)",
+        "Opacité 0,9-1,0 ; ne jamais cacher le visage ou le texte",
+        "0 emoji si le ton de marque est sérieux"
+      ],
+      "path": "broll-curator/SKILL.md"
+    },
+    {
+      "id": "caption-artist",
+      "name": "Artiste des Sous-Titres",
+      "description": "Concevoir les sous-titres dynamiques (mot par mot), lisibles, en zone de sécurité, synchronisés à la voix.",
+      "version": "1.0.0",
+      "tags": [
+        "sous-titres",
+        "typographie",
+        "accessibilité",
+        "lisibilité"
+      ],
+      "when_to_use": "Dès que la voix est enregistrée. Les sous-titres ne sont pas une option : 70 % des shorts sont vus sans son.",
+      "inputs": [
+        "Voice-over (ou script minuté)",
+        "Charte graphique (couleurs, polices)"
+      ],
+      "outputs": [
+        "Fichier de sous-titres synchronisé (ASS, mot par mot)",
+        "Position et taille validées dans la zone de sécurité",
+        "Variante « phrase » pour les plans denses"
+      ],
+      "checklist": [
+        "Couverture de 100 % de la voix",
+        "2 lignes maximum, 4 à 7 mots par ligne",
+        "Taille 60-90 px sur 1080 de large",
+        "Mot actif surligné (couleur accent) à 105 % de l'échelle",
+        "Bloc centré horizontalement, entre 40 % et 78 % de la hauteur",
+        "Jamais dans les 320 px du bas ni les 210 px de droite"
+      ],
+      "path": "caption-artist/SKILL.md"
+    },
+    {
+      "id": "cta-converter",
+      "name": "Convertisseur de CTA",
+      "description": "Convertir l'attention en action avec un CTA unique, clair et mesurable.",
+      "version": "1.0.0",
+      "tags": [
+        "cta",
+        "conversion",
+        "marketing",
+        "croissance"
+      ],
+      "when_to_use": "Dans les 3 dernières secondes, et à chaque génération de variante.",
+      "inputs": [
+        "Objectif du Short (vues, abonnés, ventes, commentaires)",
+        "Audience et stade de la relation"
+      ],
+      "outputs": [
+        "CTA final (une seule action)",
+        "Variantes de CTA pour test A/B",
+        "Micro-script de transition vers la boucle"
+      ],
+      "checklist": [
+        "Une seule action demandée",
+        "CTA verbal ET écrit (les deux, sinon 50 % de perte)",
+        "Placement dans les 3 dernières secondes",
+        "Le CTA prolonge la boucle au lieu de la clore",
+        "{'Variantes testées': 'action / curiosité / paucité'}"
+      ],
+      "path": "cta-converter/SKILL.md"
+    },
+    {
+      "id": "hook-architect",
+      "name": "Architecte de Hook",
+      "description": "Concevoir l'accroche des 3 premières secondes qui bloque le scroll et force la rétention.",
+      "version": "1.0.0",
+      "tags": [
+        "hook",
+        "rétention",
+        "script",
+        "copywriting"
+      ],
+      "when_to_use": "Avant toute écriture de script. C'est le skill le plus rentable : 80 % de la rétention se joue sur les 3 premières secondes.",
+      "inputs": [
+        "Sujet ou promesse du Short",
+        "Audience cible et niveau de douleur",
+        "Offre / produit (optionnel)"
+      ],
+      "outputs": [
+        "5 hooks candidats notés",
+        "1 hook gagnant + 2 variantes de secours",
+        "Texte à l'écran et phrase voix-off alignés"
+      ],
+      "checklist": [
+        "Hook ≤ 3 s et ≤ 9 mots",
+        "Texte à l'écran en capitales, lisible en 0,8 s",
+        "Promesse ou question immédiate (pas de « salut aujourd'hui »)",
+        "2 variantes A/B prêtes à rendre"
+      ],
+      "path": "hook-architect/SKILL.md"
+    },
+    {
+      "id": "loop-engineer",
+      "name": "Ingénieur de Boucle",
+      "description": "Concevoir une fin qui se reconnecte au début pour maximiser le temps de visionnage et la rétention.",
+      "version": "1.0.0",
+      "tags": [
+        "boucle",
+        "rétention",
+        "rewatch",
+        "structure"
+      ],
+      "when_to_use": "Dès que le corps du Short est monté. La boucle est le levier le plus sous-estimé du format.",
+      "inputs": [
+        "Plan de coupe",
+        "Script"
+      ],
+      "outputs": [
+        "Dispositif de bouclage (visuel + sonore + textuel)",
+        "Séquence de fin/CTA réécrite",
+        "Plan de coupe du plan d'ouverture réinjecté"
+      ],
+      "checklist": [
+        "La dernière frame et la première frame se ressemblent",
+        "Le plan 1 est réinjecté à la fin (ou un plan jumeau)",
+        "Le CTA est intégré à la boucle, pas collé après",
+        "Pas de fondu au noir final",
+        "{'Test de lecture en boucle': '3 cycles sans décrochage'}"
+      ],
+      "path": "loop-engineer/SKILL.md"
+    },
+    {
+      "id": "perf-analyst",
+      "name": "Analyste de Performance",
+      "description": "Lire les métriques d'un Short publié, diagnostiquer la rétention et prescrire les corrections.",
+      "version": "1.0.0",
+      "tags": [
+        "analytics",
+        "métriques",
+        "diagnostic",
+        "growth"
+      ],
+      "when_to_use": "24 h après publication, puis à chaque itération.",
+      "inputs": [
+        "Métriques de la plateforme (hook rate, complétion, watch time, partages)",
+        "Spec du Short publié"
+      ],
+      "outputs": [
+        "Diagnostic (le maillon faible)",
+        "3 corrections priorisées",
+        "Version 2 du plan de coupe"
+      ],
+      "checklist": [
+        "Une seule hypothèse par itération",
+        "Correction appliquée dans les 24 h",
+        "Comparaison des métriques avant/après sur la même cohorte",
+        "Archive des learnings dans docs/LEARNINGS.md"
+      ],
+      "path": "perf-analyst/SKILL.md"
+    },
+    {
+      "id": "publish-packager",
+      "name": "Packager de Publication",
+      "description": "Préparer le Short pour la publication multi-plateformes (titre, description, hashtags, miniature, exports).",
+      "version": "1.0.0",
+      "tags": [
+        "publication",
+        "distribution",
+        "titres",
+        "hashtags",
+        "formats"
+      ],
+      "when_to_use": "Le rendu est validé et le score QA est bon. Le packaging peut doubler la portée d'un même Short.",
+      "inputs": [
+        "Short rendu et validé",
+        "Objectif (portée, communauté, ventes)"
+      ],
+      "outputs": [
+        "Titre + description + hashtags par plateforme",
+        "Miniature (cover frame)",
+        "Exports multiples (9:16, 1:1, 4:5) et dossier de publication"
+      ],
+      "checklist": [
+        "Titre ≤ 70 caractères, il complète le hook (pas de doublon)",
+        "3 à 5 hashtags ciblés (pas 30)",
+        "Miniprise lisible en vignette",
+        "Export 1080x1920 (H.264, AAC, faststart)",
+        "Fichier nommé `slug_YYYYMMDD.mp4`"
+      ],
+      "path": "publish-packager/SKILL.md"
+    },
+    {
+      "id": "qa-gatekeeper",
+      "name": "Gardien de Qualité",
+      "description": "Contrôler la conformité d'un Short avant publication (format, rythme, zone de sécurité, audio, score).",
+      "version": "1.0.0",
+      "tags": [
+        "qualité",
+        "contrôle",
+        "publication",
+        "conformité"
+      ],
+      "when_to_use": "Systématiquement avant chaque publication, et après chaque modification du rendu.",
+      "inputs": [
+        "ShortSpec",
+        "Fichier rendu (optionnel mais recommandé)"
+      ],
+      "outputs": [
+        "Score /100 et grade (S à E)",
+        "Liste des non-conformités bloquantes",
+        "Corrections priorisées"
+      ],
+      "checklist": [
+        "Score ≥ 80 (S ou A) avant publication",
+        "Aucun contrôle en échec",
+        "Zone de sécurité respectée",
+        "Couverture de sous-titres ≥ 85 %",
+        "Loudness ≈ -14 LUFS"
+      ],
+      "path": "qa-gatekeeper/SKILL.md"
+    },
+    {
+      "id": "rhythm-director",
+      "name": "Directeur de Rythme",
+      "description": "Découper le script en plans de 1,5 à 3 secondes et construire le flux visuel (jump cuts, mouvements, transitions).",
+      "version": "1.0.0",
+      "tags": [
+        "montage",
+        "rythme",
+        "plans",
+        "transitions"
+      ],
+      "when_to_use": "Dès que le script est validé, avant de chercher les images.",
+      "inputs": [
+        "Script minuté",
+        "Sources disponibles (photos, vidéos, illustrations)"
+      ],
+      "outputs": [
+        "Plan de coupe (shot list) avec durées, mouvements, transitions",
+        "Liste des B-rolls à produire",
+        "Timing des transitions et des bruitages"
+      ],
+      "checklist": [
+        "Aucun plan > 3 s (sauf preuve visuelle forte)",
+        "Changement visuel toutes les 1,5 à 3 s",
+        "0 blanc, 0 hésitation, 0 respiration audible",
+        "Le hook a son propre plan (0-3 s)",
+        "Transitions cohérentes (1 style, pas 4)"
+      ],
+      "path": "rhythm-director/SKILL.md"
+    },
+    {
+      "id": "script-compiler",
+      "name": "Compilateur de Script",
+      "description": "Transformer une idée brute en script minuté de 15 à 45 secondes, taillé pour la voix et le montage.",
+      "version": "1.0.0",
+      "tags": [
+        "script",
+        "voix-off",
+        "structure",
+        "copywriting"
+      ],
+      "when_to_use": "Après le hook, avant le montage. Un script minuté évite 80 % des trous au montage.",
+      "inputs": [
+        "Hook retenu",
+        "1 à 3 messages clés",
+        "Durée cible"
+      ],
+      "outputs": [
+        "Script complet avec timecodes",
+        "Phrases calibrées pour la voix (10-14 mots max)",
+        "Légendes de sous-titres synchronisées"
+      ],
+      "checklist": [
+        "Une idée par phrase, 10 à 14 mots",
+        "Total 90 à 160 mots selon la durée",
+        "Voix = 150 mots/minute (x1.05 si voix rapide)",
+        "Chaque phrase = une coupe possible",
+        "CTA présent dans les 3 dernières secondes"
+      ],
+      "path": "script-compiler/SKILL.md"
+    },
+    {
+      "id": "variant-lab",
+      "name": "Laboratoire de Variantes",
+      "description": "Produire des variantes A/B systématiques (hook, CTA, durée, couleur) pour trouver ce qui performe.",
+      "version": "1.0.0",
+      "tags": [
+        "test",
+        "a/b",
+        "optimisation",
+        "données"
+      ],
+      "when_to_use": "Après avoir un Short qui fonctionne. On ne scale pas un Short qui n'a pas été testé.",
+      "inputs": [
+        "Un Short validé (spec + rendu)",
+        "Hypothèse de performance à tester"
+      ],
+      "outputs": [
+        "3 à 5 variantes comparables (une seule variable changée)",
+        "Grille de lecture des métriques",
+        "Plan de publication"
+      ],
+      "checklist": [
+        "Une seule variable modifiée par variante",
+        "Hook, CTA, durée, couleur, couverture de sous-titres = axes validés",
+        "Même heure de publication",
+        "Durée de test ≥ 24 h avant de conclure",
+        "Critère de décision écrit avant le test"
+      ],
+      "path": "variant-lab/SKILL.md"
+    }
+  ]
+}

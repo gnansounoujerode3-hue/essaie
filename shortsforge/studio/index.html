@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ShortsForge Studio</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">SF</div>
+      <div>
+        <h1>ShortsForge</h1>
+        <p>Studio de production de Shorts</p>
+      </div>
+    </div>
+
+    <nav class="tabs">
+      <button class="tab active" data-view="renders">Rendus</button>
+      <button class="tab" data-view="skills">Skills</button>
+      <button class="tab" data-view="render">Rendre</button>
+    </nav>
+
+    <section id="view-renders" class="view active">
+      <div class="section-head">
+        <h2>Bibliothèque de rendus</h2>
+        <button class="ghost" id="refresh">Actualiser</button>
+      </div>
+      <div id="renders" class="renders"></div>
+    </section>
+
+    <section id="view-skills" class="view">
+      <div class="section-head">
+        <h2>Compétences</h2>
+        <span class="count" id="skills-count"></span>
+      </div>
+      <p class="hint">Sélectionnez une compétence pour afficher sa méthode complète. Chaque compétence est autonome&nbsp;: elle peut être injectée telle quelle dans un agent.</p>
+      <div id="skills" class="skills"></div>
+    </section>
+
+    <section id="view-render" class="view">
+      <div class="section-head"><h2>Rendre un Short</h2></div>
+      <p class="hint">Sélectionnez un spec, le rendu démarre en arrière-plan. Le score QA s'affiche dès la fin.</p>
+      <label class="field">
+        <span>Spec</span>
+        <select id="spec-select"></select>
+      </label>
+      <button class="primary" id="render-btn">Lancer le rendu</button>
+      <pre id="render-log" class="log"></pre>
+    </section>
+
+    <footer>
+      <span id="env">…</span>
+    </footer>
+  </aside>
+
+  <main class="main">
+    <div class="player-wrap">
+      <video id="player" playsinline controls preload="metadata"></video>
+      <div class="player-empty" id="player-empty">
+        <p>Sélectionnez un rendu pour le prévisualiser</p>
+      </div>
+    </div>
+    <div class="meta" id="meta">
+      <div class="meta-row"><span class="k">Titre</span><span class="v" id="m-title">—</span></div>
+      <div class="meta-row"><span class="k">Score QA</span><span class="v" id="m-score">—</span></div>
+      <div class="meta-row"><span class="k">Durée</span><span class="v" id="m-duration">—</span></div>
+      <div class="meta-row"><span class="k">Format</span><span class="v" id="m-format">—</span></div>
+      <div class="meta-row"><span class="k">Alertes</span><span class="v" id="m-warn">—</span></div>
+    </div>
+    <div class="qa" id="qa"></div>
+    <div class="skill-detail" id="skill-detail"></div>
+  </main>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

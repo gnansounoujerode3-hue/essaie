@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Wrapper ShortsForge : lance la CLI avec le bon interpréteur Python.
+#   - utilise .venv si présent (installation isolée recommandée)
+#   - sinon retombe sur le python système (dépendance installées globalement)
+set -euo pipefail
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ -x "$DIR/.venv/bin/python" ]; then
+  PY="$DIR/.venv/bin/python"
+else
+  PY="${PYTHON:-python3}"
+fi
+
+export PYTHONPATH="$DIR${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONUNBUFFERED=1
+exec "$PY" -m shortsforge.cli "$@"

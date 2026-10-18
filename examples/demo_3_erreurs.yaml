@@ -1,0 +1,181 @@
+# ShortsForge — Short de démonstration
+# « 3 erreurs qui tuent tes vues » — format vertical 9:16, 28 s
+title: "3 erreurs qui tuent tes vues"
+slug: "3_erreurs_qui_tuent_tes_vues"
+grade: "standard"
+
+brand:
+  name: "ShortsForge Studio"
+  primary: "#FF2E63"
+  accent: "#25F4EE"
+  ink: "#FFFFFF"
+  paper: "#0B0B0F"
+  font_title: "anton"
+  font_caption: "inter-800"
+  font_sticker: "inter-900"
+
+duration: 28.0
+width: 1080
+height: 1920
+fps: 30
+loop: true
+
+hook:
+  text: "3 ERREURS QUI TUENT TES VUES"
+  subtext: "La 3ᵉ est invisible"
+  badge: "À VOIR"
+  duration: 2.8
+
+# ---------------------------------------------------------------- plans ----
+shots:
+  - id: h1
+    duration: 2.8
+    source: assets/media/creator_studio.jpg
+    motion: {kind: kenburns-in, start_scale: 1.02, end_scale: 1.16}
+    transition: flash
+
+  - id: e1
+    duration: 2.6
+    source: assets/media/phone_closeup.jpg
+    motion: {kind: kenburns-in, start_scale: 1.0, end_scale: 1.12}
+    transition: whip
+    texts:
+      - {text: "ERREUR 1", position: upper, size: 96, effect: pop, duration: 2.6, color: "#FF2E63"}
+      - {text: "Tu commences par te présenter", position: center, size: 62, effect: fade, duration: 2.4, at: 0.2}
+
+  - id: e1b
+    duration: 2.4
+    source: assets/media/creator_studio.jpg
+    motion: {kind: kenburns-out, start_scale: 1.14, end_scale: 1.0}
+    transition: cut
+    stickers:
+      - {text: "personne te connaît", position: top-right, at: 0.2, duration: 2.0, scale: 0.9, rotation: -6}
+
+  - id: e2
+    duration: 2.6
+    source: assets/media/editing_timeline.jpg
+    motion: {kind: pan-left, start_scale: 1.1, end_scale: 1.1}
+    transition: whip
+    texts:
+      - {text: "ERREUR 2", position: upper, size: 96, effect: pop, duration: 2.6, color: "#FF2E63"}
+      - {text: "Des plans morts de 3 secondes", position: center, size: 62, effect: fade, duration: 2.4, at: 0.2}
+
+  - id: e2b
+    duration: 2.2
+    source: assets/media/phone_closeup.jpg
+    motion: {kind: shake, start_scale: 1.02, end_scale: 1.1}
+    transition: cut
+    texts:
+      - {text: "3 s = 0 rétention", position: center, size: 76, effect: shake, duration: 2.2, highlights: ["0"]}
+
+  - id: e3
+    duration: 2.6
+    source: assets/media/phone_closeup.jpg
+    motion: {kind: kenburns-in, start_scale: 1.0, end_scale: 1.14}
+    transition: glitch
+    texts:
+      - {text: "ERREUR 3", position: upper, size: 96, effect: pop, duration: 2.6, color: "#FF2E63"}
+      - {text: "Pas de sous-titres", position: center, size: 62, effect: fade, duration: 2.4, at: 0.2}
+    broll:
+      - {source: assets/media/creator_studio.jpg, position: bottom-right, width: 300, at: 0.4, duration: 2.0, radius: 24, border: true}
+
+  - id: s1
+    duration: 2.8
+    source: assets/media/creator_studio.jpg
+    motion: {kind: kenburns-out, start_scale: 1.16, end_scale: 1.0}
+    transition: flash
+    texts:
+      - {text: "SOUS-TITRES EN GROS", position: upper, size: 84, effect: pop, duration: 2.8, color: "#25F4EE"}
+    stickers:
+      - {text: "70 % regardent sans son", position: bottom-left, at: 0.3, duration: 2.3, scale: 0.85}
+
+  - id: s2
+    duration: 2.6
+    source: assets/media/editing_timeline.jpg
+    motion: {kind: shake, start_scale: 1.0, end_scale: 1.1}
+    transition: whip
+    texts:
+      - {text: "COUPE TOUTES LES 2 SECONDES", position: upper, size: 68, effect: pop, duration: 2.6, color: "#25F4EE"}
+    stickers:
+      - {text: "1,5 - 3 s", position: top-right, at: 0.3, duration: 2.0, scale: 1.0}
+
+  - id: s3
+    duration: 2.6
+    source: assets/media/creator_studio.jpg
+    motion: {kind: kenburns-in, start_scale: 1.0, end_scale: 1.12}
+    transition: cut
+    texts:
+      - {text: "BOUCLE LA FIN SUR LE DÉBUT", position: upper, size: 66, effect: pop, duration: 2.6, color: "#25F4EE"}
+
+  - id: cta
+    duration: 2.4
+    source: assets/media/editing_timeline.jpg
+    motion: {kind: kenburns-in, start_scale: 1.0, end_scale: 1.1}
+    transition: flash
+
+  # Plan jumeau du hook : même source, même échelle au dernier frame et reprise du titre.
+  - id: twin
+    duration: 2.4
+    source: assets/media/creator_studio.jpg
+    motion: {kind: kenburns-out, start_scale: 1.16, end_scale: 1.02}
+    transition: cut
+    texts:
+      - {text: "3 ERREURS QUI TUENT TES VUES", position: upper, size: 112, effect: pop, duration: 2.4}
+      - {text: "La 3ᵉ est invisible", position: center, size: 62, font: inter-800, effect: fade, duration: 2.2, at: 0.2}
+    stickers:
+      - {text: "À VOIR", position: top-right, at: 0.05, duration: 2.3, scale: 1.0}
+      - {text: "le conseil 2 arrive demain", position: bottom-left, at: 0.4, duration: 1.5, scale: 0.85}
+
+# --------------------------------------------------------- sous-titres ----
+# (les timecodes sont recalés sur le voice-over par `sf align`)
+captions:
+  - {text: "Trois erreurs qui tuent tes vues.", start: 0.000, duration: 1.591, size: 66, max_width: 800, y: 0.70}
+  - {text: "Un : tu commences par te présenter.", start: 1.491, duration: 2.371, size: 64, max_width: 800, y: 0.70}
+  - {text: "Personne ne te connaît.", start: 3.862, duration: 2.156, size: 64, max_width: 800, y: 0.70}
+  - {text: "Deux : tu laisses des plans morts de trois secondes.", start: 6.018, duration: 2.691, size: 64, max_width: 800, y: 0.70}
+  - {text: "Zéro rétention.", start: 8.710, duration: 1.558, size: 66, max_width: 800, y: 0.70}
+  - {text: "Trois : pas de sous-titres.", start: 10.268, duration: 2.136, size: 64, max_width: 800, y: 0.70}
+  - {text: "Soixante-dix pour cent regardent sans son.", start: 12.404, duration: 2.467, size: 64, max_width: 800, y: 0.70}
+  - {text: "Alors : hook fort, coupe toutes les deux secondes.", start: 14.871, duration: 3.094, size: 64, max_width: 800, y: 0.70}
+  - {text: "Sous-titres en gros.", start: 17.965, duration: 1.331, size: 64, max_width: 800, y: 0.70}
+  - {text: "Et boucle la fin sur le début.", start: 19.296, duration: 1.504, size: 64, max_width: 800, y: 0.70}
+  - {text: "Tu gagnes des minutes de visionnage.", start: 20.800, duration: 2.281, size: 64, max_width: 800, y: 0.70}
+  - {text: "Je donne une astuce par jour.", start: 23.081, duration: 1.563, size: 64, max_width: 800, y: 0.70}
+  - {text: "Le conseil numéro deux arrive demain.", start: 24.645, duration: 1.478, size: 64, max_width: 800, y: 0.70}
+
+# ---------------------------------------------------------------- audio ----
+voiceover:
+  path: assets/audio/vo_demo.mp3
+  gain_db: 0.0
+  speed: 1.05
+  target_lufs: -14.0
+
+music:
+  path: assets/music/beat_upbeat_minor.mp3
+  gain_db: -19.0
+  duck: true
+  fade_in: 0.3
+  fade_out: 0.8
+
+sfx:
+  - {path: assets/sfx/impact.mp3, at: 0.0, gain_db: -10}
+  - {path: assets/sfx/whoosh.mp3, at: 2.78, gain_db: -15}
+  - {path: assets/sfx/pop.mp3, at: 5.35, gain_db: -14}
+  - {path: assets/sfx/whoosh.mp3, at: 7.78, gain_db: -15}
+  - {path: assets/sfx/click.mp3, at: 10.38, gain_db: -16}
+  - {path: assets/sfx/whoosh.mp3, at: 12.58, gain_db: -15}
+  - {path: assets/sfx/ding.mp3, at: 15.18, gain_db: -13}
+  - {path: assets/sfx/click.mp3, at: 17.98, gain_db: -16}
+  - {path: assets/sfx/whoosh.mp3, at: 20.58, gain_db: -15}
+  - {path: assets/sfx/riser.mp3, at: 23.18, gain_db: -16}
+  - {path: assets/sfx/ding.mp3, at: 25.58, gain_db: -14}
+
+cta:
+  text: "ABONNE-TOI"
+  subtext: "1 astuce par jour"
+  at: 23.2
+  duration: 2.6
+  style: loop
+  position: center
+
+output: "output/3_erreurs_qui_tuent_tes_vues.mp4"

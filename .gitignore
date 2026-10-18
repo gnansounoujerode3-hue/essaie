@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+*.whl
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Sorties de production
+output/
+!output/.gitkeep
+assets/fonts/fonts.conf
+image-search/
+
+# Système
+.DS_Store
+Thumbs.db
