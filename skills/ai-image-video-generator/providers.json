@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "providers": {
+    "midjourney": {
+      "label": "Midjourney",
+      "kind": "image",
+      "aspect": "9:16",
+      "official_api": false,
+      "docs": "https://docs.midjourney.com/",
+      "how_to": "Copier le prompt dans Discord (/imagine) ou le web. Les paramètres --ar, --v, --style et --no sont inclus.",
+      "params": ["--ar 9:16", "--v 6.1", "--style raw"],
+      "strengths": "Direction artistique, textures, visuels stylisés"
+    },
+    "runway": {
+      "label": "Runway Gen-4",
+      "kind": "video",
+      "aspect": "9:16",
+      "official_api": true,
+      "docs": "https://docs.dev.runwayml.com/",
+      "endpoint": "https://api.dev.runwayml.com/v1/text_to_video",
+      "env": "RUNWAY_API_KEY",
+      "how_to": "API officielle (crédits). Envoie le JSON ci-dessous avec les en-têtes Authorization + X-Runway-Version.",
+      "params": ["ratio 720:1280", "duration 5 ou 10 s"],
+      "strengths": "Mouvement de caméra, image-to-video cohérent"
+    },
+    "luma": {
+      "label": "Luma Dream Machine",
+      "kind": "video",
+      "aspect": "9:16",
+      "official_api": true,
+      "docs": "https://docs.lumalabs.ai/",
+      "endpoint": "https://api.lumalabs.ai/dream-machine/v1/generations",
+      "env": "LUMAAI_API_KEY",
+      "how_to": "POST /generations puis polling GET /generations/{id}. Télécharge assets.video quand state=completed.",
+      "params": ["aspect_ratio 9:16", "model ray-2", "loop false"],
+      "strengths": "Cinématique, plans fluides, bons décors"
+    },
+    "sora": {
+      "label": "Sora",
+      "kind": "video",
+      "aspect": "9:16",
+      "official_api": false,
+      "docs": "https://openai.com/sora",
+      "how_to": "Coller le prompt dans l'interface Sora. Décris le plan comme un brief de réalisation.",
+      "params": ["1080x1920", "durée selon le plan"],
+      "strengths": "Physique réaliste, scènes complexes, cohérence longue"
+    },
+    "kling": {
+      "label": "Kling",
+      "kind": "video",
+      "aspect": "9:16",
+      "official_api": true,
+      "docs": "https://klingai.com/",
+      "how_to": "Interface ou API Kling. Utilise le prompt + negative prompt fournis.",
+      "params": ["aspect 9:16", "durée 5/10 s"],
+      "strengths": "Mouvements humains, image-to-video"
+    },
+    "pika": {
+      "label": "Pika",
+      "kind": "video",
+      "aspect": "9:16",
+      "official_api": false,
+      "docs": "https://pika.art/",
+      "how_to": "Coller le prompt dans l'interface Pika, ajouter une image de référence si besoin.",
+      "params": ["9:16", "motion strength"],
+      "strengths": "Effets créatifs, transformations"
+    },
+    "flux": {
+      "label": "FLUX / Stable Diffusion",
+      "kind": "image",
+      "aspect": "9:16",
+      "official_api": true,
+      "docs": "https://blackforestlabs.ai/",
+      "how_to": "Prompt + negative prompt à envoyer à une API FLUX/SDXL locale ou distante.",
+      "params": ["1080x1920", "steps 30", "guidance 3.5"],
+      "strengths": "Images de référence, storyboard, textures"
+    }
+  },
+  "shot_types": {
+    "hook": "Très gros plan, regard caméra, mouvement rapide",
+    "broll": "Plan d'illustration, mouvement de caméra lent",
+    "product": "Plan produit héroïque, lumière contrastée",
+    "result": "Avant/après, preuve visuelle, écran",
+    "metaphor": "Visuel métaphorique du propos",
+    "establishing": "Plan large d'ambiance",
+    "transition": "Élément de transition graphique ou matière"
+  }
+}

@@ -1,0 +1,42 @@
+# Tests et médias locaux (volumineux)
+.testdata/
+demo/
+tests/tmp/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Sorties média par défaut des skills
+*.ass
+*.transcript.json
+*.transcript.md
+clips/
+premiere/
+resolve/
+vertical/
+cleaned/
+compressed/
+sfx/
+ai-assets/
+renders/
+.vesk-index.json
+transcript.json
+analysis.json
+edit.json
+library.json
+
+# OS / éditeurs
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

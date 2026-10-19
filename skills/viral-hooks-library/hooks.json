@@ -1,0 +1,290 @@
+{
+  "version": 1,
+  "language": "fr",
+  "mechanics": {
+    "boucle_ouverte": "On promet une information et on repousse la révélation. Le spectateur reste pour fermer la boucle.",
+    "contraste": "On casse une croyance immédiatement : « tout le monde fait X, c'est faux ».",
+    "preuve_sociale": "Un chiffre, un résultat ou une personne réelle rend la promesse crédible.",
+    "enjeu": "On annonce ce que le spectateur perd s'il ne regarde pas.",
+    "identification": "On vise explicitement un public (« si tu es… ») pour déclencher l'auto-identification.",
+    "pattern_interrupt": "Un changement visuel ou sonore brutal à la 0,5 s casse le scroll."
+  },
+  "categories": {
+    "curiosite": "Boucle ouverte, secret, information retenue",
+    "contrarian": "Casser une croyance ou une pratique courante",
+    "resultat": "Montrer un résultat concret dès la première seconde",
+    "histoire": "Commencer au milieu d'une scène, sans contexte",
+    "probleme": "Nommer une douleur précise du spectateur",
+    "liste": "Promettre une structure numérotée rapide",
+    "preuve": "Chiffres, avant/après, capture d'écran",
+    "urgence": "Coût de l'inaction, délai, fenêtre qui se ferme",
+    "defi": "Défi personnel ou test mesurable",
+    "comparaison": "A/B, avant/après, X vs Y"
+  },
+  "templates": [
+    {
+      "id": "curiosite-secret",
+      "category": "curiosite",
+      "name": "Le secret retenu",
+      "template": "Personne ne te dira ça, mais {sujet}…",
+      "example": "Personne ne te dira ça, mais ton intro de 20 secondes coûte 40 % de rétention.",
+      "visual": "Gros plan visage, zoom rapide 105 → 100 %, fond flou",
+      "sound": "whoosh + coupe sèche sur le dernier mot",
+      "mechanic": "boucle_ouverte",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "curiosite-erreur",
+      "category": "curiosite",
+      "name": "L'erreur invisible",
+      "template": "Tu fais cette erreur avec {sujet} depuis des mois.",
+      "example": "Tu fais cette erreur avec tes sous-titres depuis des mois.",
+      "visual": "Split screen : geste anodin vs conséquence chiffrée",
+      "sound": "pop + silence de 0,3 s après la phrase",
+      "mechanic": "enjeu",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "contrarian-stop",
+      "category": "contrarian",
+      "name": "Arrête tout",
+      "template": "Arrête de {action}. C'est exactement comme ça que {consequence}.",
+      "example": "Arrête de couper tous tes silences. C'est comme ça que ton montage sonne robotique.",
+      "visual": "Main qui coupe un montage, puis retour au visage",
+      "sound": "camera click + braam léger",
+      "mechanic": "contraste",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "contrarian-mythe",
+      "category": "contrarian",
+      "name": "Le mythe",
+      "template": "On t'a dit que {mythe}. C'est faux, et voilà pourquoi.",
+      "example": "On t'a dit qu'il fallait poster tous les jours. C'est faux, et voilà pourquoi.",
+      "visual": "Texte « MYTHE » qui se brise, transition glitch",
+      "sound": "glass break + riser",
+      "mechanic": "contraste",
+      "platforms": ["tiktok", "reels", "shorts", "youtube"]
+    },
+    {
+      "id": "resultat-avant-apres",
+      "category": "resultat",
+      "name": "Avant / après",
+      "template": "Voilà {resultat} en {delai}, sans {obstacle}.",
+      "example": "Voilà 1 million de vues en 14 jours, sans publicité.",
+      "visual": "Résultat à l'écran dès la frame 1, puis avant/après",
+      "sound": "impact + silence, pas de musique sur le hook",
+      "mechanic": "preuve_sociale",
+      "platforms": ["tiktok", "reels", "shorts", "youtube"]
+    },
+    {
+      "id": "resultat-capture",
+      "category": "resultat",
+      "name": "La preuve écran",
+      "template": "Ce chiffre, c'est {resultat}. Et il vient de {sujet}.",
+      "example": "Ce chiffre, c'est 87 % de rétention à 30 secondes. Et il vient d'un seul changement de montage.",
+      "visual": "Capture d'écran du dashboard, zoom sur la courbe",
+      "sound": "pop de validation + whoosh",
+      "mechanic": "preuve_sociale",
+      "platforms": ["youtube", "linkedin", "reels"]
+    },
+    {
+      "id": "histoire-milieu",
+      "category": "histoire",
+      "name": "Commencer au milieu",
+      "template": "Je montais cette vidéo quand {evenement}. J'aurais dû m'en douter.",
+      "example": "Je montais cette vidéo quand mon disque dur a lâché. J'aurais dû m'en douter.",
+      "visual": "Plan in medias res, caméra à l'épaule, pas d'intro",
+      "sound": "ambiance brute, pas de jingle",
+      "mechanic": "boucle_ouverte",
+      "platforms": ["tiktok", "reels", "youtube"]
+    },
+    {
+      "id": "histoire-chiffre",
+      "category": "histoire",
+      "name": "Le chiffre qui cloche",
+      "template": "J'ai dépensé {chiffre} pour comprendre une seule chose sur {sujet}.",
+      "example": "J'ai dépensé 4 000 € pour comprendre une seule chose sur les accroches.",
+      "visual": "Reçu / facture en insert, puis retour visage",
+      "sound": "cash register + coupe",
+      "mechanic": "enjeu",
+      "platforms": ["tiktok", "reels", "shorts", "youtube"]
+    },
+    {
+      "id": "probleme-douleur",
+      "category": "probleme",
+      "name": "La douleur nommée",
+      "template": "Si tu passes des heures sur {tache} et que personne ne regarde, regarde ça.",
+      "example": "Si tu passes des heures sur tes montages et que personne ne regarde, regarde ça.",
+      "visual": "Time-lapse de montage + courbe plate",
+      "sound": "horloge + whoosh",
+      "mechanic": "identification",
+      "platforms": ["tiktok", "reels", "shorts", "youtube"]
+    },
+    {
+      "id": "probleme-cout",
+      "category": "probleme",
+      "name": "Le coût caché",
+      "template": "Chaque {unite} que tu perds sur {sujet} te coûte {cout}.",
+      "example": "Chaque seconde de blanc que tu laisses te coûte 2 % de rétention.",
+      "visual": "Compteur qui défile, barre de rétention qui descend",
+      "sound": "tick + impact",
+      "mechanic": "enjeu",
+      "platforms": ["youtube", "reels", "linkedin"]
+    },
+    {
+      "id": "liste-trois",
+      "category": "liste",
+      "name": "Les 3 points",
+      "template": "3 choses qui changent {sujet} immédiatement. La 2e est contre-intuitive.",
+      "example": "3 choses qui changent ton montage immédiatement. La 2e est contre-intuitive.",
+      "visual": "Cartes numérotées 1/2/3, apparition sur beat",
+      "sound": "pop par carte",
+      "mechanic": "boucle_ouverte",
+      "platforms": ["tiktok", "reels", "shorts", "youtube"]
+    },
+    {
+      "id": "liste-erreurs",
+      "category": "liste",
+      "name": "Les erreurs",
+      "template": "{chiffre} erreurs qui tuent {sujet}. Tu en fais sûrement 2.",
+      "example": "4 erreurs qui tuent tes sous-titres. Tu en fais sûrement 2.",
+      "visual": "Grille de 4 vignettes fautives, croix rouges",
+      "sound": "error buzzer + whoosh",
+      "mechanic": "identification",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "preuve-capture",
+      "category": "preuve",
+      "name": "Capture brute",
+      "template": "Regarde ça. C'est {resultat} en {delai}.",
+      "example": "Regarde ça. C'est 300 000 vues en 48 heures.",
+      "visual": "Capture d'écran plein cadre, aucun habillage",
+      "sound": "silence 0,5 s + pop",
+      "mechanic": "preuve_sociale",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "preuve-temoin",
+      "category": "preuve",
+      "name": "Le témoin",
+      "template": "{public} a testé {sujet} pendant {delai}. Voilà le résultat.",
+      "example": "Un monteur a testé les sous-titres animés pendant 30 jours. Voilà le résultat.",
+      "visual": "Portrait du témoin + résultat en incrustation",
+      "sound": "notification + transition",
+      "mechanic": "preuve_sociale",
+      "platforms": ["youtube", "reels", "linkedin"]
+    },
+    {
+      "id": "urgence-fenetre",
+      "category": "urgence",
+      "name": "La fenêtre",
+      "template": "Dans {delai}, {sujet} ne marchera plus comme maintenant.",
+      "example": "Dans 6 mois, ce format de Short ne marchera plus comme maintenant.",
+      "visual": "Compte à rebours, couleurs chaudes",
+      "sound": "horloge + riser",
+      "mechanic": "enjeu",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "urgence-cout-inaction",
+      "category": "urgence",
+      "name": "Le coût de l'inaction",
+      "template": "Chaque jour sans {action}, tu perds {benefice}.",
+      "example": "Chaque jour sans sous-titres, tu perds 30 % de vues potentielles.",
+      "visual": "Calendrier qui se vide, chiffres rouges",
+      "sound": "tick + basses",
+      "mechanic": "enjeu",
+      "platforms": ["youtube", "reels", "shorts"]
+    },
+    {
+      "id": "defi-30-jours",
+      "category": "defi",
+      "name": "Le défi mesuré",
+      "template": "Je teste {sujet} pendant {delai}. Si ça marche, je ne reviens jamais en arrière.",
+      "example": "Je teste le montage 100 % automatisé pendant 30 jours. Si ça marche, je ne reviens jamais en arrière.",
+      "visual": "Écran de départ avec date + journal J1",
+      "sound": "beat qui démarre sur le mot « teste »",
+      "mechanic": "boucle_ouverte",
+      "platforms": ["youtube", "tiktok", "reels"]
+    },
+    {
+      "id": "defi-contre",
+      "category": "defi",
+      "name": "Le contre-pied",
+      "template": "Tout le monde dit que {adversaire}. Je vais tester le contraire.",
+      "example": "Tout le monde dit qu'il faut publier plus. Je vais tester le contraire.",
+      "visual": "Split screen, deux camps, puis bascule plein cadre",
+      "sound": "switch + whoosh",
+      "mechanic": "contraste",
+      "platforms": ["tiktok", "reels", "youtube"]
+    },
+    {
+      "id": "comparaison-ab",
+      "category": "comparaison",
+      "name": "A/B immédiat",
+      "template": "Même vidéo. Deux montages. Regarde laquelle tu regardes jusqu'au bout.",
+      "example": "Même vidéo. Deux montages. Regarde laquelle tu regardes jusqu'au bout.",
+      "visual": "Écran divisé, les deux versions jouent en simultané",
+      "sound": "deux textures audio distinctes",
+      "mechanic": "pattern_interrupt",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "comparaison-prix",
+      "category": "comparaison",
+      "name": "Le prix vs le résultat",
+      "template": "Ce montage a coûté {chiffre}. Celui-là, {chiffre2}. Devine lequel performe.",
+      "example": "Ce montage a coûté 2 000 €. Celui-là, 0 €. Devine lequel performe.",
+      "visual": "Split screen avec prix affichés, floutage du résultat",
+      "sound": "cash + beat",
+      "mechanic": "curiosite",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "curiosite-interdit",
+      "category": "curiosite",
+      "name": "Ce qu'on ne montre pas",
+      "template": "Ce que les meilleurs monteurs ne montrent jamais : {sujet}.",
+      "example": "Ce que les meilleurs monteurs ne montrent jamais : leur première passe de montage.",
+      "visual": "Timeline floutée qui se dévoile, gros plan main",
+      "sound": "mystery hit + whoosh",
+      "mechanic": "boucle_ouverte",
+      "platforms": ["youtube", "reels", "tiktok"]
+    },
+    {
+      "id": "curiosite-question",
+      "category": "curiosite",
+      "name": "La question directe",
+      "template": "Pourquoi {sujet} fonctionne mieux quand tu arrêtes {action} ?",
+      "example": "Pourquoi ta vidéo retient mieux quand tu arrêtes de tout expliquer ?",
+      "visual": "Visage plein cadre, regard caméra, pas de musique",
+      "sound": "silence + voix seule",
+      "mechanic": "boucle_ouverte",
+      "platforms": ["youtube", "reels", "linkedin"]
+    },
+    {
+      "id": "probleme-public",
+      "category": "probleme",
+      "name": "Appel au public",
+      "template": "Si tu es {public} et que {probleme}, cette vidéo va te faire gagner {benefice}.",
+      "example": "Si tu es créateur et que tes vidéos plafonnent à 500 vues, cette vidéo va te faire gagner des heures.",
+      "visual": "Texte public ciblé + visage, transition vers le résultat",
+      "sound": "pop + beat",
+      "mechanic": "identification",
+      "platforms": ["tiktok", "reels", "shorts"]
+    },
+    {
+      "id": "histoire-boucle",
+      "category": "histoire",
+      "name": "La boucle parfaite",
+      "template": "Je vais te raconter comment {sujet} a failli me faire {consequence}. La fin est dans la vidéo.",
+      "example": "Je vais te raconter comment un mauvais sous-titre a failli me faire perdre un client. La fin est dans la vidéo.",
+      "visual": "Plan d'ouverture in medias res, micro-flashback",
+      "sound": "riser discret + voix",
+      "mechanic": "boucle_ouverte",
+      "platforms": ["tiktok", "reels", "youtube"]
+    }
+  ]
+}
