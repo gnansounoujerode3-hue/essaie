@@ -52,7 +52,8 @@ done
 ok "toutes les CLI répondent à --help"
 
 head_ "Compilation"
-if "$PY" -m py_compile $(find "$ROOT/shared" "$ROOT/skills" -name '*.py') 2>"$TMP/compile.err"; then
+if find "$ROOT/shared" "$ROOT/skills" -name '*.py' -print0 \
+     | xargs -0 "$PY" -m py_compile 2>"$TMP/compile.err"; then
   ok "modules Python compilés"
 else
   bad "erreur de compilation"; tail -5 "$TMP/compile.err"
