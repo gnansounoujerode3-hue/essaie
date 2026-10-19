@@ -77,17 +77,57 @@ def require() -> str:
 
 @lru_cache(maxsize=1)
 def filter_list() -> set[str]:
-    proc = run([ffmpeg_bin(), "-hide_banner", "-filters"], check=False, capture=True)
+    proc = run([ffmpeg_bin(), "-hide_banner", "-filters"], check=False, capture=True,
+               quiet=True)
     filters: set[str] = set()
     for line in (proc.stdout or "").splitlines():
-        match = re.match(r"\s*[TSC.]{3}\s+(\S+)\s+", line)
+        # FFmpeg 9 a fait évoluer la largeur des colonnes : on reste tolérant.
+        match = re.match(r"\s*[A-Z.]{3}\s+(\S+)\s+", line)
         if match:
             filters.add(match.group(1))
     return filters
 
 
+@lru_cache(maxsize=None)
 def has_filter(name: str) -> bool:
+    """Vrai si le filtre existe réellement dans ce build.
+
+    ``-h filter=NAME`` est stable entre versions (contrairement au format de
+    ``-filters``), et répond « Unknown filter » quand le filtre manque.
+    """
+    proc = run([ffmpeg_bin(), "-hide_banner", "-h", f"filter={name}"],
+               check=False, capture=True, quiet=True)
+    output = (proc.stdout or "") + (proc.stderr or "")
+    if f"Unknown filter '{name}'" in output or "Unknown filter" in output:
+        return False
+    if re.search(rf"^Filter \({name}\)|^Filter {re.escape(name)}\b", output,
+                 re.MULTILINE):
+        return True
     return name in filter_list()
+
+
+def escape_filter_path(path: str | Path) -> str:
+    """Échappe un chemin pour l'option ``filename`` d'un filtre FFmpeg.
+
+    Gère les deux pièges : les deux-points de lecteur Windows (``C:\…``) et les
+    caractères spéciaux du parseur de filtergraph (``'``, ``,``, ``[``, ``]``).
+    """
+    text = Path(path).expanduser().resolve().as_posix()
+    for char in ("\\", ":", "'", "[", "]", ",", ";"):
+        text = text.replace(char, "\\" + char)
+    return text
+
+
+def subtitle_filter(path: str | Path) -> str:
+    """Expression ``-vf`` pour incruster un SRT/ASS, compatible FFmpeg 7 → 9."""
+    escaped = escape_filter_path(path)
+    for name in ("subtitles", "ass"):
+        if has_filter(name):
+            return f"{name}=filename='{escaped}'"
+    raise SkillError(
+        "Ce FFmpeg n'a pas le rendu de sous-titres (libass). Installe un build complet "
+        "(brew install ffmpeg / apt install ffmpeg) ou utilise le fichier ASS dans un NLE."
+    )
 
 
 def ffmpeg(args: Sequence[str], *, check: bool = True, dry_run: bool = False,
@@ -281,17 +321,12 @@ def burn_subtitles(
     dry_run: bool = False,
 ) -> Path:
     """Incruste un fichier ASS (libass requis)."""
-    if not has_filter("ass") and not dry_run:
-        raise SkillError(
-            "Ce FFmpeg n'a pas le filtre 'ass' (libass). Installe un build complet "
-            "(brew install ffmpeg / apt install ffmpeg), ou utilise le mode plan."
-        )
     out_path = Path(out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="vesk-subs-") as tmp:
         simple = Path(tmp) / "captions.ass"
         shutil.copyfile(ass_path, simple)
-        vf = f"ass=filename={simple.as_posix()}"
+        vf = "subtitles=filename=captions.ass" if dry_run else subtitle_filter(simple)
         info("Incrustation des sous-titres…")
         ffmpeg(["-i", str(video), "-vf", vf, "-c:v", "libx264", "-crf", str(crf),
                 "-preset", preset, "-c:a", "aac", "-b:a", audio_bitrate,

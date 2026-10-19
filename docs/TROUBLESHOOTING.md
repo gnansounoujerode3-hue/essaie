@@ -12,7 +12,12 @@ export FFMPEG_BIN=/chemin/ffmpeg   # force un binaire précis
 pip install imageio-ffmpeg         # solution sans droits admin
 ```
 
-**« Ce FFmpeg n'a pas le filtre 'ass' »**
+**« Ce FFmpeg n'a pas le filtre 'ass' » / FFmpeg 9**
+Depuis FFmpeg 9, certains builds n'exposent plus que le filtre `subtitles`.
+Le pack le détecte (`-h filter=…`) et l'utilise automatiquement ; la mise à jour
+de FFmpeg n'est nécessaire que si **aucun** des deux filtres n'est présent.
+
+**« Ce FFmpeg n'a pas le filtre 'ass' » (ancien message)**
 Build sans libass (fréquent avec certaines roues statiques). Solutions :
 `brew install ffmpeg`, `sudo apt install ffmpeg`, ou télécharger un build Gyan/BtbN.
 En attendant, les fichiers `.ass` produits restent utilisables dans VLC, Resolve ou Premiere.

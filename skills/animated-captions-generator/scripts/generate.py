@@ -52,14 +52,14 @@ def _load_emoji(value: str | None) -> dict | None:
 
 
 def _preview(video: str, ass_path: Path, out: Path, time: float) -> None:
-    from vesk.ffmpeg import ffmpeg
+    from vesk.ffmpeg import ffmpeg, subtitle_filter
 
     out.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="vesk-preview-") as tmp:
         simple = Path(tmp) / "captions.ass"
         shutil.copyfile(ass_path, simple)
-        ffmpeg(["-ss", f"{time:.3f}", "-i", video, "-vf", f"ass=filename={simple.as_posix()}",
-                "-frames:v", "1", "-update", "1", str(out)])
+        ffmpeg(["-ss", f"{time:.3f}", "-i", video, "-vf", subtitle_filter(simple),
+                "-frames:v", "1", str(out)])
 
 
 def run() -> int:
@@ -156,7 +156,7 @@ def run() -> int:
     if args.burn:
         if not args.media:
             raise SkillError("--burn nécessite --media.")
-        if not has_filter("ass"):
+        if not (has_filter("subtitles") or has_filter("ass")):
             raise SkillError("FFmpeg sans libass : installe un build complet ou utilise le fichier ASS.")
         burn_subtitles(args.media, ass_path, args.burn, crf=args.crf, preset=args.preset)
         print(f"✅ Vidéo : {args.burn}")

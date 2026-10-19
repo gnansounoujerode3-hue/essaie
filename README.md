@@ -202,7 +202,7 @@ vesk/
 │   └── imagegen.py             # prompts et exécution IA
 ├── scripts/install.sh|ps1      # installation
 ├── scripts/selftest.sh         # diagnostic + pipeline de bout en bout
-├── tests/                      # 31 tests unitaires (sans FFmpeg)
+├── tests/                      # 34 tests unitaires (sans FFmpeg)
 ├── examples/                   # plan de montage, rétention CSV, transcriptions
 └── docs/                       # pipelines, dépannage, exigences
 ```
@@ -269,7 +269,7 @@ variable d'environnement.
 ## 8. Tests et qualité
 
 ```bash
-python3 -m unittest discover -s tests -v    # 31 tests, sans FFmpeg
+python3 -m unittest discover -s tests -v    # 34 tests, sans FFmpeg
 bash scripts/selftest.sh                    # 38 contrôles + pipeline réelle
 ```
 

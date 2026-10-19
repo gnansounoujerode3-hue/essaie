@@ -23,6 +23,7 @@ from vesk.captions import (build_events, generate, get_style,  # noqa: E402
 from vesk.common import (SkillError, fmt_srt_time, fmt_timecode,  # noqa: E402
                          normalize_text, parse_time, sanitize_json, slugify,
                          write_json)
+from vesk.ffmpeg import escape_filter_path  # noqa: E402
 from vesk.hooks import build_hook_plan, generate_variants, load_library  # noqa: E402
 from vesk.media import TimeMap, merge_ranges, render_cut, speech_ranges  # noqa: E402
 from vesk.motion import build_motion, list_templates  # noqa: E402
@@ -155,6 +156,24 @@ class HighlightTests(unittest.TestCase):
         self.assertTrue(clips)
         for clip in clips:
             self.assertGreater(clip["end"], clip["start"])
+
+
+class FilterPathTests(unittest.TestCase):
+    def test_spaces_kept(self):
+        target = TMPDIR / "a b.ass"
+        target.write_text("", encoding="utf-8")
+        self.assertIn("a b.ass", escape_filter_path(target))
+
+    def test_colon_and_quote_escaped(self):
+        target = TMPDIR / "x:y'z.ass"
+        target.write_text("", encoding="utf-8")
+        escaped = escape_filter_path(target)
+        self.assertIn("x\\:y\\'z.ass", escaped)
+
+    def test_absolute(self):
+        target = TMPDIR / "simple.ass"
+        target.write_text("", encoding="utf-8")
+        self.assertTrue(escape_filter_path(target).startswith("/"))
 
 
 class MediaTests(unittest.TestCase):

@@ -109,7 +109,7 @@ def run() -> int:
     ass_path = write_ass(args.out, content)
     print(f"✅ ASS : {ass_path}")
     if args.burn:
-        if not has_filter("ass"):
+        if not (has_filter("subtitles") or has_filter("ass")):
             raise SkillError("FFmpeg sans libass : installe un build complet.")
         output = Path(args.video_out or "motion.mp4")
         burn_subtitles(args.burn, ass_path, output, crf=args.crf, preset=args.preset)

@@ -23,9 +23,10 @@ for _parent in Path(__file__).resolve().parents:
 
 from vesk.cli import base_parser, main_guard  # noqa: E402
 from vesk.common import SkillError, fmt_clock, human_size, info  # noqa: E402
-from vesk.ffmpeg import (MEDIA_EXTENSIONS, audio_loudness, burn_subtitles,  # noqa: E402
-                         extract_audio, extract_frame, ffmpeg, ffmpeg_bin,
-                         has_filter, media_info, mux_audio, validate_media)
+from vesk.ffmpeg import (  # noqa: E402
+    MEDIA_EXTENSIONS, audio_loudness, burn_subtitles, extract_audio, extract_frame,
+    ffmpeg, ffmpeg_bin, has_filter, media_info, mux_audio, subtitle_filter,
+    validate_media)
 from vesk.media import merge_ranges, render_cut  # noqa: E402
 
 
@@ -183,10 +184,9 @@ def cmd_hardsub(args) -> int:
         burn_subtitles(args.input, subtitle, args.output, crf=args.crf,
                        preset=args.preset, dry_run=args.dry_run)
     else:
-        if not has_filter("subtitles"):
-            raise SkillError("FFmpeg sans libass (filtre subtitles).")
-        escaped = subtitle.resolve().as_posix().replace(":", "\\:").replace("'", "\\'")
-        ffmpeg(["-i", args.input, "-vf", f"subtitles='{escaped}'",
+        if not (has_filter("subtitles") or has_filter("ass")):
+            raise SkillError("FFmpeg sans libass (filtres subtitles/ass).")
+        ffmpeg(["-i", args.input, "-vf", subtitle_filter(subtitle),
                 "-c:v", "libx264", "-crf", str(args.crf), "-preset", args.preset,
                 "-c:a", "aac", "-b:a", "192k", str(args.output)], dry_run=args.dry_run)
     print(f"✅ {args.output}")
