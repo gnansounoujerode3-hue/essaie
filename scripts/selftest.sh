@@ -26,7 +26,7 @@ except Exception as exc:
 ")"
 if [[ -n "$FFMPEG_BIN_RESOLVED" ]]; then ok "FFmpeg : $FFMPEG_BIN_RESOLVED"; else bad "FFmpeg introuvable"; fi
 HAS_LIBASS=0
-if [[ -n "$FFMPEG_BIN_RESOLVED" ]] && "$FFMPEG_BIN_RESOLVED" -hide_banner -filters 2>/dev/null | grep -qE '^\s*[TSC.]{3}\s+ass\s'; then
+if [[ -n "$FFMPEG_BIN_RESOLVED" ]] && "$FFMPEG_BIN_RESOLVED" -hide_banner -filters 2>/dev/null | grep -E '^[[:space:]]*[.TSC]{3}[[:space:]]+ass[[:space:]]' >/dev/null; then
   ok "libass disponible (incrustation ASS)"; HAS_LIBASS=1
 else
   bad "libass absent : les incrustations ASS échoueront (le reste fonctionne)"
