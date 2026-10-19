@@ -18,6 +18,17 @@ print(ffmpeg_bin())
 ")"
 echo "▸ FFmpeg : $ffmpeg_bin"
 
+# libass n'est pas garanti (certains builds Homebrew/conda) : on continue sans burn.
+HAS_LIBASS=0
+if [[ "${VESK_NO_LIBASS:-0}" == "1" ]]; then
+  echo "! libass désactivé pour ce test (VESK_NO_LIBASS=1)"
+elif "$ffmpeg_bin" -hide_banner -filters 2>/dev/null | grep -E '^[[:space:]]*[.TSC]{3}[[:space:]]+ass[[:space:]]' >/dev/null; then
+  HAS_LIBASS=1
+else
+  echo "! libass absent dans ce build : les ASS seront produits sans incrustation."
+  "$ffmpeg_bin" -version 2>/dev/null | head -n1 | sed 's/^/  /' 
+fi
+
 echo "▸ Génération du rush de démonstration (26 s, 720x1280)…"
 "$ffmpeg_bin" -hide_banner -loglevel error -y \
   -f lavfi -i "testsrc2=size=720x1280:rate=30:duration=26" \
@@ -41,12 +52,14 @@ echo "▸ Mots-clés et emojis…"
   --transcript "$ROOT/examples/transcript-example.srt" \
   --out "$OUT/emoji-map.json" --keywords-out "$OUT/keywords.json" >/dev/null
 
-echo "▸ Sous-titres animés incrustés…"
+echo "▸ Sous-titres animés…"
+burn_args=()
+[[ $HAS_LIBASS -eq 1 ]] && burn_args=(--burn "$OUT/rush-captioned.mp4")
 "$PY" "$ROOT/skills/animated-captions-generator/scripts/generate.py" \
   --transcript "$ROOT/examples/transcript-example.srt" --style hormozi \
   --emoji-map "$OUT/emoji-map.json" --keywords "$OUT/keywords.json" \
   --media "$OUT/rush-cut.mp4" --out "$OUT/captions.ass" --srt "$OUT/captions.srt" \
-  --burn "$OUT/rush-captioned.mp4" --preview "$OUT/apercu.png" --preview-time 2.5 >/dev/null
+  ${burn_args[@]+"${burn_args[@]}"} --preview "$OUT/apercu.png" --preview-time 2.5 >/dev/null
 
 echo "▸ Moments forts et hooks…"
 "$PY" "$ROOT/skills/highlight-detector-ai/scripts/detect.py" \
@@ -81,5 +94,5 @@ echo "▸ Rétention et habillage…"
 
 echo
 echo "✅ Démo prête dans $OUT/"
-echo "   rush-sfx.mp4 · apercu.png · analyse.md · highlights.md · hooks.md"
+echo "   rush-sfx.mp4 · captions.ass · apercu.png · analyse.md · highlights.md · hooks.md"
 echo "   premiere/edit.fcpxml · resolve/job-resolve.py · retention.md"

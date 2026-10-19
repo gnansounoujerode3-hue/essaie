@@ -23,6 +23,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+for _stream in (sys.stdout, sys.stderr):
+    if hasattr(_stream, "reconfigure"):
+        try:
+            _stream.reconfigure(encoding="utf-8", errors="replace")
+        except (ValueError, OSError):
+            pass
+
 REQUIRED_KEYS = ("name", "description", "license")
 EXPECTED_SKILLS = 19
 SCRIPT_RE = re.compile(

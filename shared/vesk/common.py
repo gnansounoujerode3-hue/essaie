@@ -15,6 +15,21 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 
+def _configure_stdio() -> None:
+    """Évite les UnicodeEncodeError des consoles Windows (cp1252)."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is None:
+            continue
+        try:
+            reconfigure(encoding="utf-8", errors="replace")
+        except (ValueError, OSError):
+            pass
+
+
+_configure_stdio()
+
+
 def env_flag(name: str) -> bool:
     """Lit un drapeau d'environnement (1/true/yes/on)."""
     return os.environ.get(name, "").strip().lower() in {"1", "true", "yes", "on"}
