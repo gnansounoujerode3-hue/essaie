@@ -10,9 +10,9 @@ PY="${PYTHON:-python3}"
 export VESK_QUIET=1   # démo lisible : masque les lignes de commande FFmpeg
 mkdir -p "$OUT"
 
-ffmpeg_bin="$("$PY" -c "
-import sys
-sys.path.insert(0, '$ROOT/shared')
+ffmpeg_bin="$(VESK_ROOT="$ROOT" "$PY" -c "
+import os, sys
+sys.path.insert(0, os.path.join(os.environ['VESK_ROOT'], 'shared'))
 from vesk.ffmpeg import ffmpeg_bin
 print(ffmpeg_bin())
 ")"

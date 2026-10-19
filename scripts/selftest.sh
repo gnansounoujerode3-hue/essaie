@@ -16,12 +16,13 @@ head_ "Environnement"
 "$PY" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3,9) else 1)' \
   && ok "Python $( $PY -c 'import platform;print(platform.python_version())' )" \
   || bad "Python 3.9+ requis"
-FFMPEG_BIN_RESOLVED="$("$PY" -c "
-import sys; sys.path.insert(0, '$ROOT/shared')
+FFMPEG_BIN_RESOLVED="$(VESK_ROOT="$ROOT" "$PY" -c "
+import os, sys
+sys.path.insert(0, os.path.join(os.environ['VESK_ROOT'], 'shared'))
 try:
     from vesk.ffmpeg import ffmpeg_bin
     print(ffmpeg_bin())
-except Exception as exc:
+except Exception:
     print('')
 ")"
 if [[ -n "$FFMPEG_BIN_RESOLVED" ]]; then ok "FFmpeg : $FFMPEG_BIN_RESOLVED"; else bad "FFmpeg introuvable"; fi
