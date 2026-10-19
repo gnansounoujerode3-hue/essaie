@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "arena/**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Tests · ${{ matrix.os }} · Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python: ["3.9", "3.11", "3.12"]
+        include:
+          - os: windows-latest
+            python: "3.11"
+          - os: macos-latest
+            python: "3.11"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Installer FFmpeg (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg fonts-dejavu-core
+
+      - name: Installer FFmpeg (macOS)
+        if: runner.os == 'macOS'
+        run: brew install ffmpeg
+
+      - name: Installer FFmpeg (Windows)
+        if: runner.os == 'Windows'
+        run: choco install ffmpeg -y --no-progress
+
+      - name: Compilation
+        run: python -m compileall -q shared skills tests
+
+      - name: Tests unitaires
+        run: python -m unittest discover -s tests -v
+
+      - name: Validation des skills (frontmatter, scripts, --help)
+        run: python tests/validate_skills.py --help-check
+
+      - name: Installation (copie)
+        shell: bash
+        run: |
+          bash scripts/install.sh --target "$RUNNER_TEMP/skills-copy" --force
+          test -f "$RUNNER_TEMP/skills-copy/animated-captions-generator/SKILL.md"
+          test -f "$RUNNER_TEMP/skills-copy/animated-captions-generator/_shared/vesk/captions.py"
+          test -f "$RUNNER_TEMP/skills-copy/viral-hooks-library/_shared/data/viral-hooks-library/hooks.json"
+
+      - name: Installation (liens symboliques)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          bash scripts/install.sh --target "$RUNNER_TEMP/skills-link" --mode link --force
+          test -e "$RUNNER_TEMP/skills-link/animated-captions-generator/SKILL.md"
+
+      - name: Démo de bout en bout
+        shell: bash
+        run: |
+          bash scripts/demo.sh "$RUNNER_TEMP/demo"
+          test -s "$RUNNER_TEMP/demo/rush-sfx.mp4"
+          test -s "$RUNNER_TEMP/demo/captions.ass"
+          test -s "$RUNNER_TEMP/demo/premiere/edit.fcpxml"
+          test -s "$RUNNER_TEMP/demo/resolve/job-resolve.py"
+
+      - name: Selftest (38 contrôles)
+        shell: bash
+        run: bash scripts/selftest.sh
+
+  extendscript:
+    name: Syntaxe ExtendScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Vérifier les JSX générés
+        run: python tests/check_jsx.py
+
+  installer-windows:
+    name: Installeur PowerShell
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tester install.ps1
+        shell: pwsh
+        run: |
+          $dest = Join-Path $env:RUNNER_TEMP "skills-ps"
+          ./scripts/install.ps1 -Target $dest -Force
+          if (-not (Test-Path (Join-Path $dest "animated-captions-generator/SKILL.md"))) {
+            throw "Skill non installé"
+          }
+          if (-not (Test-Path (Join-Path $dest "animated-captions-generator/_shared/vesk/common.py"))) {
+            throw "Bibliothèque partagée non installée"
+          }
+          if (-not (Test-Path (Join-Path $dest "viral-hooks-library/_shared/data/viral-hooks-library/hooks.json"))) {
+            throw "Données partagées non installées"
+          }
+          Write-Host "✓ install.ps1 OK"

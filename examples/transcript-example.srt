@@ -1,0 +1,27 @@
+1
+00:00:00,200 --> 00:00:03,400
+Personne ne te dira ça, mais ton intro te coûte 40 % de rétention.
+
+2
+00:00:03,700 --> 00:00:07,200
+Regarde ce chiffre : 87 % des spectateurs partent avant la 8e seconde.
+
+3
+00:00:07,500 --> 00:00:11,000
+La solution est simple : commence par le résultat, pas par le contexte.
+
+4
+00:00:11,300 --> 00:00:15,000
+Trois étapes. La première, coupe tous les silences de plus de 300 millisecondes.
+
+5
+00:00:15,300 --> 00:00:19,000
+La deuxième, place une preuve visuelle avant chaque explication.
+
+6
+00:00:19,300 --> 00:00:23,000
+La troisième, finis par une question qui ouvre la vidéo suivante.
+
+7
+00:00:23,300 --> 00:00:26,500
+Essaie ça sur ta prochaine vidéo et compare la courbe de rétention.

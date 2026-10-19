@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "description": "Catalogue d'effets sonores VESK. Les fichiers WAV peuvent être générés localement avec build_catalog.py --generate.",
+  "effects": [
+    {
+      "id": "whoosh",
+      "file": "whoosh.wav",
+      "label": "Whoosh de transition",
+      "tags": ["transition", "coupe", "glissement", "scene"],
+      "default_gain_db": -10,
+      "usage": "Chaque changement de plan ou de section, création de mouvement."
+    },
+    {
+      "id": "pop",
+      "file": "pop.wav",
+      "label": "Pop d'apparition",
+      "tags": ["texte", "caption", "mot", "popup", "emoji"],
+      "default_gain_db": -14,
+      "usage": "Apparition d'un mot-clé, d'une carte, d'un emoji ou d'un pop-up."
+    },
+    {
+      "id": "braam",
+      "file": "braam.wav",
+      "label": "Braam d'impact",
+      "tags": ["hook", "impact", "intro", "revelation"],
+      "default_gain_db": -12,
+      "usage": "Hook, révélation, retournement de situation. À utiliser avec parcimonie."
+    },
+    {
+      "id": "camera-click",
+      "file": "camera-click.wav",
+      "label": "Clic appareil photo",
+      "tags": ["photo", "preuve", "capture", "transition"],
+      "default_gain_db": -12,
+      "usage": "Capture d'écran, avant/après, preuve visuelle."
+    },
+    {
+      "id": "riser",
+      "file": "riser.wav",
+      "label": "Riser de tension",
+      "tags": ["tension", "build", "avant", "reveal"],
+      "default_gain_db": -16,
+      "usage": "Montée avant une révélation ou une coupe majeure."
+    },
+    {
+      "id": "impact",
+      "file": "impact.wav",
+      "label": "Impact basse",
+      "tags": ["accent", "beat", "basse", "coupe"],
+      "default_gain_db": -12,
+      "usage": "Accent sur un mot fort ou un beat musical."
+    },
+    {
+      "id": "tick",
+      "file": "tick.wav",
+      "label": "Tick / horloge",
+      "tags": ["compteur", "chiffre", "urgence", "liste"],
+      "default_gain_db": -18,
+      "usage": "Chiffres, compteurs, listes, urgence."
+    },
+    {
+      "id": "swoosh",
+      "file": "swoosh.wav",
+      "label": "Swoosh court",
+      "tags": ["mouvement", "slide", "transition"],
+      "default_gain_db": -13,
+      "usage": "Mouvement de caméra, slide de texte, transition rapide."
+    }
+  ]
+}

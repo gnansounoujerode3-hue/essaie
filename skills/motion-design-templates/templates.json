@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "description": "Templates de motion design rendus en ASS (libass) puis incrustés par FFmpeg. Aucun plugin ni After Effects requis.",
+  "templates": {
+    "title": {
+      "label": "Titre cinétique",
+      "fields": ["text", "subtitle"],
+      "description": "Titre plein écran avec entrée en scale, ligne d'accent animée et sous-titre en fondu.",
+      "use_case": "Ouverture de chapitre, hook, carte de section"
+    },
+    "lower-third": {
+      "label": "Lower third",
+      "fields": ["text", "subtitle"],
+      "description": "Bandeau nom + fonction en bas à gauche, glissement latéral et barre d'accent.",
+      "use_case": "Présenter un intervenant, un client, une source"
+    },
+    "chapter": {
+      "label": "Carte de chapitre",
+      "fields": ["text", "subtitle", "number"],
+      "description": "Grand numéro + titre, fond assombri, entrée en deux temps.",
+      "use_case": "Structurer une vidéo longue en chapitres"
+    },
+    "quote": {
+      "label": "Citation",
+      "fields": ["text", "subtitle"],
+      "description": "Citation centrée avec guillemets graphiques et auteur en petit.",
+      "use_case": "Témoignage, citation d'expert, preuve sociale"
+    },
+    "counter": {
+      "label": "Compteur animé",
+      "fields": ["number", "text"],
+      "description": "Chiffre qui monte de 0 à la valeur cible avec easing.",
+      "use_case": "Résultats, statistiques, preuves chiffrées"
+    },
+    "progress": {
+      "label": "Barre de progression",
+      "fields": [],
+      "description": "Barre fine en bas d'écran qui se remplit sur la durée indiquée.",
+      "use_case": "Vidéo chapitrée, tutoriel, compte à rebours"
+    },
+    "callout": {
+      "label": "Callout / annotation",
+      "fields": ["text"],
+      "description": "Boîte d'annotation avec pointeur, entrée en glissement.",
+      "use_case": "Pointer un détail, expliquer un chiffre à l'écran"
+    },
+    "cta": {
+      "label": "End card CTA",
+      "fields": ["text", "subtitle"],
+      "description": "Écran final avec appel à l'action, flèche animée et pseudo.",
+      "use_case": "Fin de vidéo, renvoi vers une autre vidéo ou un abonnement"
+    }
+  },
+  "palettes": {
+    "vesk": {"primary": "#FFFFFF", "accent": "#FFD400", "background": "#000000"},
+    "ocean": {"primary": "#EAF6FF", "accent": "#00E5FF", "background": "#001018"},
+    "sunset": {"primary": "#FFF4E8", "accent": "#FF7A00", "background": "#1A0B00"},
+    "mono": {"primary": "#FFFFFF", "accent": "#FFFFFF", "background": "#000000"}
+  }
+}
