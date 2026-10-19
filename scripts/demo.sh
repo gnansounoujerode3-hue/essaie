@@ -22,7 +22,12 @@ echo "▸ FFmpeg : $ffmpeg_bin"
 HAS_LIBASS=0
 if [[ "${VESK_NO_LIBASS:-0}" == "1" ]]; then
   echo "! libass désactivé pour ce test (VESK_NO_LIBASS=1)"
-elif "$ffmpeg_bin" -hide_banner -filters 2>/dev/null | grep -E '^[[:space:]]*[.TSC]{3}[[:space:]]+ass[[:space:]]' >/dev/null; then
+elif VESK_ROOT="$ROOT" "$PY" -c "
+import os, sys
+sys.path.insert(0, os.path.join(os.environ['VESK_ROOT'], 'shared'))
+from vesk.ffmpeg import has_filter
+raise SystemExit(0 if (has_filter('subtitles') or has_filter('ass')) else 1)
+" >/dev/null 2>&1; then
   HAS_LIBASS=1
 else
   echo "! libass absent dans ce build : les ASS seront produits sans incrustation."

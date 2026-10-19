@@ -6,6 +6,7 @@ Exécution : python3 -m unittest discover -s tests -v
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import sys
 import tempfile
@@ -164,6 +165,7 @@ class FilterPathTests(unittest.TestCase):
         target.write_text("", encoding="utf-8")
         self.assertIn("a b.ass", escape_filter_path(target))
 
+    @unittest.skipIf(sys.platform.startswith("win"), "':' interdit dans un nom Windows")
     def test_colon_and_quote_escaped(self):
         target = TMPDIR / "x:y'z.ass"
         target.write_text("", encoding="utf-8")
@@ -173,7 +175,9 @@ class FilterPathTests(unittest.TestCase):
     def test_absolute(self):
         target = TMPDIR / "simple.ass"
         target.write_text("", encoding="utf-8")
-        self.assertTrue(escape_filter_path(target).startswith("/"))
+        escaped = escape_filter_path(target)
+        self.assertTrue(escaped.startswith("/") or re.match(r"^[A-Za-z]\\?:", escaped),
+                        escaped)
 
 
 class MediaTests(unittest.TestCase):

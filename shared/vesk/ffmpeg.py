@@ -98,10 +98,13 @@ def has_filter(name: str) -> bool:
     proc = run([ffmpeg_bin(), "-hide_banner", "-h", f"filter={name}"],
                check=False, capture=True, quiet=True)
     output = (proc.stdout or "") + (proc.stderr or "")
-    if f"Unknown filter '{name}'" in output or "Unknown filter" in output:
+    # FFmpeg répond « Unknown filter 'x'. » quand le filtre n'est pas compilé.
+    # Le libellé d'aide, lui, varie selon les versions : on ne l'analyse pas.
+    lowered = output.lower()
+    if any(marker in lowered for marker in ("unknown filter", "no such filter",
+                                            "filter not found")):
         return False
-    if re.search(rf"^Filter \({name}\)|^Filter {re.escape(name)}\b", output,
-                 re.MULTILINE):
+    if output.strip():
         return True
     return name in filter_list()
 
@@ -112,7 +115,13 @@ def escape_filter_path(path: str | Path) -> str:
     Gère les deux pièges : les deux-points de lecteur Windows (``C:\…``) et les
     caractères spéciaux du parseur de filtergraph (``'``, ``,``, ``[``, ``]``).
     """
-    text = Path(path).expanduser().resolve().as_posix()
+    raw = Path(path).expanduser()
+    try:
+        if raw.exists():
+            raw = raw.resolve()
+    except OSError:
+        pass
+    text = raw.as_posix()
     for char in ("\\", ":", "'", "[", "]", ",", ";"):
         text = text.replace(char, "\\" + char)
     return text

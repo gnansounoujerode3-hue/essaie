@@ -27,7 +27,12 @@ except Exception:
 ")"
 if [[ -n "$FFMPEG_BIN_RESOLVED" ]]; then ok "FFmpeg : $FFMPEG_BIN_RESOLVED"; else bad "FFmpeg introuvable"; fi
 HAS_LIBASS=0
-if [[ -n "$FFMPEG_BIN_RESOLVED" ]] && "$FFMPEG_BIN_RESOLVED" -hide_banner -filters 2>/dev/null | grep -E '^[[:space:]]*[.TSC]{3}[[:space:]]+ass[[:space:]]' >/dev/null; then
+if [[ -n "$FFMPEG_BIN_RESOLVED" ]] && VESK_ROOT="$ROOT" "$PY" -c "
+import os, sys
+sys.path.insert(0, os.path.join(os.environ['VESK_ROOT'], 'shared'))
+from vesk.ffmpeg import has_filter
+raise SystemExit(0 if (has_filter('subtitles') or has_filter('ass')) else 1)
+" >/dev/null 2>&1; then
   ok "libass disponible (incrustation ASS)"; HAS_LIBASS=1
 else
   bad "libass absent : les incrustations ASS échoueront (le reste fonctionne)"
