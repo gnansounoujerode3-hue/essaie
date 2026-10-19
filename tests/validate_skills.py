@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import sys
@@ -130,10 +131,10 @@ def check_skill(skill_dir: Path, report: Report, help_check: bool) -> None:
         if not first_line or not first_line[0].startswith("#!"):
             report.warn(name, f"{script.name} sans shebang")
         if help_check:
+            env = dict(os.environ, PYTHONIOENCODING="utf-8")
             result = subprocess.run(
                 [sys.executable, str(script), "--help"],
-                capture_output=True, text=True, timeout=60,
-                env={"PATH": "/usr/local/bin:/usr/bin:/bin", "PYTHONIOENCODING": "utf-8"},
+                capture_output=True, text=True, timeout=60, env=env,
             )
             if result.returncode != 0:
                 report.error(name, f"{script.name} --help échoue ({result.returncode})")

@@ -152,12 +152,16 @@ def _format_name(width: int, height: int, fps: float) -> str:
 
 
 def file_url(path: str) -> str:
+    """URL de fichier locale, valide sur POSIX comme sur Windows."""
     resolved = Path(path).expanduser()
     try:
         resolved = resolved.resolve()
     except OSError:
         pass
-    return "file://localhost" + quote(str(resolved).replace("\\", "/"), safe="/:")
+    text = resolved.as_posix()
+    if re.match(r"^[A-Za-z]:", text):  # C:/… → /C:/…
+        text = "/" + text
+    return "file://localhost" + quote(text, safe="/:")
 
 
 def _safe_text(value: Any) -> str:

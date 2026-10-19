@@ -75,7 +75,11 @@ command -v ffprobe >/dev/null 2>&1 || warn "ffprobe absent : repli automatique s
 
 mkdir -p "$TARGET"
 
-mapfile -t ALL < <(find "$ROOT/skills" -mindepth 1 -maxdepth 1 -type d -exec test -f '{}/SKILL.md' \; -print | sort)
+# bash 3.2 (macOS) : pas de mapfile
+ALL=()
+for candidate in "$ROOT"/skills/*/; do
+  [[ -f "${candidate}SKILL.md" ]] && ALL+=("${candidate%/}")
+done
 [[ ${#ALL[@]} -gt 0 ]] || fail "Aucun skill trouvé dans $ROOT/skills."
 
 SELECTED=()

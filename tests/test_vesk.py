@@ -6,12 +6,15 @@ Exécution : python3 -m unittest discover -s tests -v
 from __future__ import annotations
 
 import json
+import shutil
 import sys
+import tempfile
 import unittest
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+TMPDIR = Path(tempfile.mkdtemp(prefix="vesk-tests-"))
 sys.path.insert(0, str(ROOT / "shared"))
 
 from vesk.analyze import build_clips, score_sentences  # noqa: E402
@@ -23,13 +26,17 @@ from vesk.common import (SkillError, fmt_srt_time, fmt_timecode,  # noqa: E402
 from vesk.hooks import build_hook_plan, generate_variants, load_library  # noqa: E402
 from vesk.media import TimeMap, merge_ranges, render_cut, speech_ranges  # noqa: E402
 from vesk.motion import build_motion, list_templates  # noqa: E402
-from vesk.nle_premiere import (jsx_import_plan, normalize_plan, to_edl,  # noqa: E402
-                               to_fcpxml, to_xmeml)
+from vesk.nle_premiere import (file_url, jsx_import_plan,  # noqa: E402
+                               normalize_plan, to_edl, to_fcpxml, to_xmeml)
 from vesk.retention import analyze_file, find_events  # noqa: E402
 from vesk.retention import load_retention_csv, resample  # noqa: E402
 from vesk.sfx import detect_cues  # noqa: E402
 from vesk.transcript import (distribute_words, ensure_word_timings,  # noqa: E402
                              parse_srt, to_srt, trim_to_range)
+
+def tearDownModule() -> None:
+    shutil.rmtree(TMPDIR, ignore_errors=True)
+
 
 SAMPLE_SRT = """1
 00:00:00,500 --> 00:00:02,500
@@ -63,7 +70,7 @@ class CommonTests(unittest.TestCase):
         cleaned = sanitize_json({"a": float("nan"), "b": [1, float("inf")]})
         self.assertIsNone(cleaned["a"])
         self.assertEqual(cleaned["b"], [1, None])
-        write_json(Path("/tmp/vesk-json-test.json"), cleaned)
+        write_json(TMPDIR / "json-test.json", cleaned)
 
 
 class TranscriptTests(unittest.TestCase):
@@ -185,10 +192,10 @@ class NLETests(unittest.TestCase):
             "width": 1080,
             "height": 1920,
             "clips": [
-                {"source": "/tmp/a.mp4", "in": 0, "out": 2, "source_duration": 10,
-                 "width": 1080, "height": 1920},
-                {"source": "/tmp/b.mp4", "in": 1, "out": 3, "source_duration": 8,
-                 "width": 1080, "height": 1920},
+                {"source": str(TMPDIR / "a.mp4"), "in": 0, "out": 2,
+                 "source_duration": 10, "width": 1080, "height": 1920},
+                {"source": str(TMPDIR / "b.mp4"), "in": 1, "out": 3,
+                 "source_duration": 8, "width": 1080, "height": 1920},
             ],
         })
 
@@ -200,7 +207,9 @@ class NLETests(unittest.TestCase):
     def test_xmeml(self):
         xml = to_xmeml(self.plan)
         self.assertIn("<xmeml version=\"5\">", xml)
-        self.assertIn("<pathurl>file://localhost/tmp/a.mp4</pathurl>", xml)
+        expected = f"<pathurl>{file_url(str(TMPDIR / 'a.mp4'))}</pathurl>"
+        self.assertIn(expected, xml)
+        self.assertIn("a.mp4", xml)
         ET.fromstring(xml.split("?>", 1)[1])
 
     def test_edl_and_jsx(self):
