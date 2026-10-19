@@ -71,6 +71,13 @@ else
   warn "  Sans admin : pip install imageio-ffmpeg"
 fi
 command -v ffprobe >/dev/null 2>&1 || warn "ffprobe absent : repli automatique sur 'ffmpeg -i'."
+if command -v ffmpeg >/dev/null 2>&1; then
+  if ffmpeg -hide_banner -h filter=subtitles 2>&1 | grep -qi "unknown filter"; then
+    warn "Ce FFmpeg est un build sans libass : impossible d'incruster les sous-titres."
+    warn "  macOS : brew install ffmpeg-full  (build complet, keg-only : ajouter son bin au PATH)"
+    warn "  Sans libass, les fichiers .ass restent utilisables dans VLC/Premiere/Resolve."
+  fi
+fi
 
 
 mkdir -p "$TARGET"

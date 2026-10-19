@@ -59,7 +59,7 @@ Windows (PowerShell) :
 | Élément | Obligatoire | Notes |
 |---------|-------------|-------|
 | Python **3.9+** | oui | stdlib uniquement pour le socle |
-| **FFmpeg** (avec libass) | oui pour la vidéo | `brew install ffmpeg` · `sudo apt install ffmpeg` · `winget install Gyan.FFmpeg` |
+| **FFmpeg** (avec libass) | oui pour la vidéo | `brew install ffmpeg-full` · `sudo apt install ffmpeg` · `winget install Gyan.FFmpeg` |
 | ffprobe | non | repli automatique sur `ffmpeg -i` |
 | faster-whisper | non | transcription locale — `pip install faster-whisper` |
 | opencv-python-headless | non | suivi de visage / détection de plans |

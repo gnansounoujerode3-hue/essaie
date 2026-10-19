@@ -12,14 +12,24 @@ export FFMPEG_BIN=/chemin/ffmpeg   # force un binaire précis
 pip install imageio-ffmpeg         # solution sans droits admin
 ```
 
-**« Ce FFmpeg n'a pas le filtre 'ass' » / FFmpeg 9**
-Depuis FFmpeg 9, certains builds n'exposent plus que le filtre `subtitles`.
-Le pack le détecte (`-h filter=…`) et l'utilise automatiquement ; la mise à jour
-de FFmpeg n'est nécessaire que si **aucun** des deux filtres n'est présent.
+**« Ce FFmpeg n'a pas le filtre 'ass' » / build sans libass**
+Depuis Homebrew v8, la formule `ffmpeg` est un build **slim** : ni `libass`, ni
+`subtitles`, ni `drawtext`. Le build complet est une formule séparée, **keg-only** :
+
+```bash
+brew install ffmpeg-full
+export PATH="$(brew --prefix ffmpeg-full)/bin:$PATH"   # à mettre dans ~/.zshrc
+```
+
+Autre solution sans droits admin : `pip install imageio-ffmpeg`, dont le binaire
+embarqué inclut libass (le socle le détecte automatiquement).
+Le pack interroge `ffmpeg -h filter=…` (stable entre versions) et se rabat sur
+`subtitles` quand `ass` manque ; sans aucun des deux, il produit le `.ass` et
+poursuit (la démo saute l'incrustation et l'aperçu avec un avertissement).
 
 **« Ce FFmpeg n'a pas le filtre 'ass' » (ancien message)**
 Build sans libass (fréquent avec certaines roues statiques). Solutions :
-`brew install ffmpeg`, `sudo apt install ffmpeg`, ou télécharger un build Gyan/BtbN.
+`brew install ffmpeg-full`, `sudo apt install ffmpeg`, ou télécharger un build Gyan/BtbN.
 En attendant, les fichiers `.ass` produits restent utilisables dans VLC, Resolve ou Premiere.
 
 **ffprobe absent ou cassé**

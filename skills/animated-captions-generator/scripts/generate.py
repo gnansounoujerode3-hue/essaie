@@ -22,7 +22,7 @@ for _parent in Path(__file__).resolve().parents:
 from vesk.captions import (describe_styles, events_to_srt, generate,  # noqa: E402
                            missing_font_warning, parse_canvas, write_ass)
 from vesk.cli import base_parser, load_or_transcribe, main_guard, save_text  # noqa: E402
-from vesk.common import SkillError, read_json, write_json  # noqa: E402
+from vesk.common import SkillError, read_json, warn, write_json  # noqa: E402
 from vesk.ffmpeg import burn_subtitles, has_filter, media_info  # noqa: E402
 
 

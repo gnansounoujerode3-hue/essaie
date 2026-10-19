@@ -41,7 +41,11 @@ jobs:
 
       - name: Installer FFmpeg (macOS)
         if: runner.os == 'macOS'
-        run: brew install ffmpeg
+        # Depuis la v8, la formule `ffmpeg` de Homebrew est un build « slim »
+        # sans libass : `ffmpeg-full` fournit subtitles/ass/drawtext.
+        run: |
+          brew install ffmpeg-full
+          echo "$(brew --prefix ffmpeg-full)/bin" >> "$GITHUB_PATH"
 
       - name: Installer FFmpeg (Windows)
         if: runner.os == 'Windows'

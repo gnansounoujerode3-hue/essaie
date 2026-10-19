@@ -59,12 +59,14 @@ echo "▸ Mots-clés et emojis…"
 
 echo "▸ Sous-titres animés…"
 burn_args=()
+preview_args=()
 [[ $HAS_LIBASS -eq 1 ]] && burn_args=(--burn "$OUT/rush-captioned.mp4")
+[[ $HAS_LIBASS -eq 1 ]] && preview_args=(--preview "$OUT/apercu.png" --preview-time 2.5)
 "$PY" "$ROOT/skills/animated-captions-generator/scripts/generate.py" \
   --transcript "$ROOT/examples/transcript-example.srt" --style hormozi \
   --emoji-map "$OUT/emoji-map.json" --keywords "$OUT/keywords.json" \
   --media "$OUT/rush-cut.mp4" --out "$OUT/captions.ass" --srt "$OUT/captions.srt" \
-  ${burn_args[@]+"${burn_args[@]}"} --preview "$OUT/apercu.png" --preview-time 2.5 >/dev/null
+  ${burn_args[@]+"${burn_args[@]}"} ${preview_args[@]+"${preview_args[@]}"} >/dev/null
 
 echo "▸ Moments forts et hooks…"
 "$PY" "$ROOT/skills/highlight-detector-ai/scripts/detect.py" \
@@ -99,5 +101,7 @@ echo "▸ Rétention et habillage…"
 
 echo
 echo "✅ Démo prête dans $OUT/"
-echo "   rush-sfx.mp4 · captions.ass · apercu.png · analyse.md · highlights.md · hooks.md"
+summary="rush-sfx.mp4 · captions.ass · analyse.md · highlights.md · hooks.md"
+[[ $HAS_LIBASS -eq 1 ]] && summary="rush-captioned.mp4 · apercu.png · $summary"
+echo "   $summary"
 echo "   premiere/edit.fcpxml · resolve/job-resolve.py · retention.md"
