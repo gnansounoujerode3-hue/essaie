@@ -52,20 +52,11 @@ jobs:
 
       - name: Tests unitaires
         shell: bash
-        run: |
-          set +e
-          python -m unittest discover -s tests -v > tests.log 2>&1
-          status=$?
-          cat tests.log
-          if [ $status -ne 0 ]; then
-            while IFS= read -r line; do printf '::error::%s\n' "$line"; done < <(
-              grep -E "^(FAIL|ERROR):|Error|Traceback|^  File |^Ran |^FAILED" tests.log | head -40
-            )
-          fi
-          exit $status
+        run: bash scripts/ci_step.sh "Tests unitaires" python -m unittest discover -s tests -v
 
       - name: Validation des skills (frontmatter, scripts, --help)
-        run: python tests/validate_skills.py --help-check
+        shell: bash
+        run: bash scripts/ci_step.sh "Validation des skills" python tests/validate_skills.py --help-check
 
       - name: Installation (copie)
         shell: bash
@@ -85,7 +76,7 @@ jobs:
       - name: Démo de bout en bout
         shell: bash
         run: |
-          bash scripts/demo.sh "$RUNNER_TEMP/demo"
+          bash scripts/ci_step.sh "Démo" bash scripts/demo.sh "$RUNNER_TEMP/demo"
           test -s "$RUNNER_TEMP/demo/rush-sfx.mp4"
           test -s "$RUNNER_TEMP/demo/captions.ass"
           test -s "$RUNNER_TEMP/demo/premiere/edit.fcpxml"
@@ -93,7 +84,7 @@ jobs:
 
       - name: Selftest (38 contrôles)
         shell: bash
-        run: bash scripts/selftest.sh
+        run: bash scripts/ci_step.sh "Selftest" bash scripts/selftest.sh
 
   extendscript:
     name: Syntaxe ExtendScript
