@@ -15,9 +15,9 @@ lexicaux, SFX, BPM, motion design, NLE et hooks.
 
 | Besoin | Installation | Skills concernés |
 |--------|--------------|------------------|
-| Transcription locale | `pip install faster-whisper` | speech-to-text-whisper |
+| Transcription locale | `pip install faster-whisper` | speech-to-text-whisper, marketing-video-pipeline |
 | Transcription locale (alt.) | `pip install openai-whisper` | speech-to-text-whisper |
-| Suivi de visage, scènes | `pip install opencv-python-headless` | auto-framing-916, sound-effect-cue-automator |
+| Suivi de visage, scènes | `pip install opencv-python-headless` | auto-framing-916, sound-effect-cue-automator, marketing-video-pipeline |
 | Recherche CLIP | `pip install torch transformers pillow` | broll-finder-indexer |
 
 ## Filtres FFmpeg utilisés

@@ -1,6 +1,6 @@
 # Pipelines VESK
 
-Six recettes complètes, testées avec les scripts du dépôt. Remplacer les noms de
+Huit recettes complètes, testées avec les scripts du dépôt. Remplacer les noms de
 fichiers, garder l'ordre des étapes.
 
 > Tous les scripts sont appelés par leur chemin. Si les skills sont installés dans
@@ -191,3 +191,24 @@ python3 skills/sound-effect-cue-automator/scripts/plan_cues.py \
 
 Durée typique pour 10 minutes de rush sur un laptop récent : 6 à 15 minutes
 (transcription `small` comprise), sans compter les téléchargements de modèles.
+
+---
+
+## H. Rush → vidéo marketing en une seule commande
+
+Variante encore plus courte de la recette G : tout tient dans **un** appel
+(dérushage, reprises, cadrage visage, sous-titres, zooms, audio -14 LUFS),
+avec replis automatiques si une étape coince. Détail complet, options et
+dépannage : [`skills/marketing-video-pipeline/SKILL.md`](../skills/marketing-video-pipeline/SKILL.md).
+
+```bash
+# Chemin absolu du rush, puis montage (résultat sur la ligne FINAL_VIDEO=)
+INPUT="/chemin/absolu/rush.mp4"
+nohup python3 skills/marketing-video-pipeline/scripts/montage_marketing.py "$INPUT" \
+  --out-dir output > run.log 2>&1 &
+for i in $(seq 1 20); do sleep 15; grep -q -E "^FINAL_VIDEO=|^MONTAGE_ECHEC" run.log && break; done
+tail -n 8 run.log
+```
+
+Déclinaisons : `--format horizontal` (YouTube), `--fit` (sans recadrage),
+`--music fichier.mp3` (ducking automatique), `--hook "Titre" --cta "Abonne-toi"`.

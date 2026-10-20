@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# VESK — installe les 19 skills de montage vidéo.
+# VESK — installe les 20 skills de montage vidéo.
 #
 #   ./scripts/install.sh                     # copie vers ~/.claude/skills
 #   ./scripts/install.sh --mode link         # liens symboliques (mise à jour instantanée)

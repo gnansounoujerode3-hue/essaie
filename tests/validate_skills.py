@@ -31,7 +31,7 @@ for _stream in (sys.stdout, sys.stderr):
             pass
 
 REQUIRED_KEYS = ("name", "description", "license")
-EXPECTED_SKILLS = 19
+EXPECTED_SKILLS = 20
 SCRIPT_RE = re.compile(
     r"(?:python3?|python)\s+([\w./~-]*(?:skills/)?[\w./-]+\.py)"
 )

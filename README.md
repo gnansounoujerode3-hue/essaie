@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/gnansounoujerode3-hue/essaie/actions/workflows/ci.yml/badge.svg)](https://github.com/gnansounoujerode3-hue/essaie/actions/workflows/ci.yml)
 
-**19 skills de montage vidéo automatisé** pour agents IA (Claude Code, Cursor, Codex…),
+**20 skills de montage vidéo automatisé** pour agents IA (Claude Code, Cursor, Codex…),
 en français, sans dépendance obligatoire hors **FFmpeg** et **Python 3.9+**.
 
 Chaque skill est un dossier `skills/<nom>/` avec :
@@ -13,6 +13,7 @@ Chaque skill est un dossier `skills/<nom>/` avec :
 ```
 Dérushage → sous-titres animés → B-rolls/recadrage → sound design
 → NLE (Premiere / After Effects / Resolve) → analyse de rétention → hooks
+→ ou en une seule passe : marketing-video-pipeline (rush → vidéo finie)
 ```
 
 ---
@@ -71,7 +72,7 @@ automatiquement (variable `FFMPEG_BIN` pour forcer un chemin).
 
 ---
 
-## 2. Les 19 skills
+## 2. Les 20 skills
 
 ### 1 · Dérushage, analyse & tri intelligents
 
@@ -122,6 +123,12 @@ automatiquement (variable `FFMPEG_BIN` pour forcer un chemin).
 | [`retention-chart-analyzer`](skills/retention-chart-analyzer/SKILL.md) | courbes YouTube, décrochages/pics, croisement avec la transcription |
 | [`viral-hooks-library`](skills/viral-hooks-library/SKILL.md) | 24 hooks, storyboard 3 s, sons/visuels, variantes A/B |
 
+### 7 · Pipeline tout-en-un (rush → vidéo finie)
+
+| Skill | Rôle |
+|-------|------|
+| [`marketing-video-pipeline`](skills/marketing-video-pipeline/SKILL.md) | **une commande** : rush brut → vidéo 9:16 prête à publier (auto-cut, dernière prise, cadrage visage, sous-titres, zooms, -14 LUFS, replis automatiques) |
+
 ---
 
 ## 3. Démarrage en 5 commandes
@@ -168,6 +175,7 @@ Toutes les commandes acceptent `--help` et `--dry-run` quand une action est dest
 | **Rendu DaVinci étalonné** | `davinci-resolve-python-api` (timeline + LUT + CDL + render) |
 | **Refonte d'une vidéo qui décroche** | `retention-chart-analyzer` → `viral-hooks-library` → réécriture du hook → re-montage |
 | **Habillage IA** | `ai-image-video-generator` (plan) → `broll-finder-indexer` (placement) → `motion-design-templates` |
+| **Rush → vidéo publiable en une passe** | `marketing-video-pipeline` (une seule commande, replis automatiques) |
 
 Détails et commandes exactes : [`docs/PIPELINES.md`](docs/PIPELINES.md).
 
@@ -177,7 +185,7 @@ Détails et commandes exactes : [`docs/PIPELINES.md`](docs/PIPELINES.md).
 
 ```
 vesk/
-├── skills/                     # 19 skills autonomes (SKILL.md + scripts/ + données)
+├── skills/                     # 20 skills autonomes (SKILL.md + scripts/ + données)
 │   └── <skill>/
 │       ├── SKILL.md            # frontmatter name/description + mode d'emploi
 │       ├── scripts/*.py        # CLI
@@ -270,10 +278,10 @@ variable d'environnement.
 
 ```bash
 python3 -m unittest discover -s tests -v    # 34 tests, sans FFmpeg
-bash scripts/selftest.sh                    # 38 contrôles + pipeline réelle
+bash scripts/selftest.sh                    # 39 contrôles + pipeline réelle
 ```
 
-Le selftest génère ses propres médias de test (lavfi), vérifie les 19 skills, les CLI,
+Le selftest génère ses propres médias de test (lavfi), vérifie les 20 skills, les CLI,
 la compilation, puis exécute transcription → cut → captions → burn → highlights →
 B-rolls → SFX → BPM → rétention → hooks → compression.
 

@@ -86,7 +86,7 @@ jobs:
           test -s "$RUNNER_TEMP/demo/premiere/edit.fcpxml"
           test -s "$RUNNER_TEMP/demo/resolve/job-resolve.py"
 
-      - name: Selftest (38 contrôles)
+      - name: Selftest (39 contrôles)
         shell: bash
         run: bash scripts/ci_step.sh "Selftest" bash scripts/selftest.sh
 
