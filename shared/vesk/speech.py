@@ -2,6 +2,11 @@
 
 Providers :
   * ``faster-whisper`` : local, rapide, recommandé (``pip install faster-whisper``)
+  * ``whispercpp``     : local, whisper.cpp via un fichier ggml déjà présent
+                         (``pip install pywhispercpp`` + modèle ``ggml-*.bin`` ;
+                         ``--model`` = taille ou chemin, ``WHISPERCPP_MODEL``,
+                         ``~/models/ggml-*.bin``) — idéal quand le téléchargement
+                         de modèles est impossible
   * ``whisper``        : local, référence OpenAI (``pip install openai-whisper``)
   * ``openai``         : API OpenAI Whisper (``OPENAI_API_KEY``)
   * ``groq``           : API Groq Whisper large-v3, très rapide (``GROQ_API_KEY``)
@@ -34,6 +39,8 @@ def available_providers() -> list[str]:
     providers = []
     if _has_module("faster_whisper"):
         providers.append("faster-whisper")
+    if _has_module("pywhispercpp") and _whispercpp_model_path("small", missing_ok=True):
+        providers.append("whispercpp")
     if _has_module("whisper"):
         providers.append("whisper")
     if os.environ.get("OPENAI_API_KEY"):
@@ -60,21 +67,35 @@ def transcribe(
         info(f"[dry-run] transcription {media_path} via {provider} (modèle {model})")
         return {"language": language, "duration": media_info(media_path)["duration"],
                 "segments": [], "source": {"provider": provider, "model": model}}
+    def _run(selected: str) -> dict[str, Any]:
+        if selected in {"faster-whisper", "whisper", "whispercpp"}:
+            return _local_transcribe(media_path, selected, model, language,
+                                     word_timestamps=word_timestamps, vad=vad)
+        if selected in {"openai", "groq"}:
+            return _api_transcribe(media_path, selected, model, language)
+        raise SkillError(f"Provider inconnu : {selected} "
+                         f"(choix : auto, faster-whisper, whispercpp, whisper, openai, groq)")
+
     if provider == "auto":
         candidates = available_providers()
         if not candidates:
             raise SkillError(_missing_provider_message())
-        provider = candidates[0]
-        info(f"Provider de transcription sélectionné : {provider}")
-
-    if provider in {"faster-whisper", "whisper"}:
-        result = _local_transcribe(media_path, provider, model, language,
-                                   word_timestamps=word_timestamps, vad=vad)
-    elif provider in {"openai", "groq"}:
-        result = _api_transcribe(media_path, provider, model, language)
+        result = None
+        failures: list[str] = []
+        for candidate in candidates:
+            try:
+                info(f"Provider de transcription sélectionné : {candidate}")
+                result = _run(candidate)
+                provider = candidate
+                break
+            except Exception as exc:  # repli sur le provider suivant
+                failures.append(f"{candidate} : {exc}")
+                warn(f"Échec avec {candidate} ({exc}) — essai du provider suivant…")
+        if result is None:
+            raise SkillError("Tous les providers de transcription ont échoué :\n- "
+                             + "\n- ".join(failures))
     else:
-        raise SkillError(f"Provider inconnu : {provider} "
-                         f"(choix : auto, faster-whisper, whisper, openai, groq)")
+        result = _run(provider)
 
     info_ = media_info(media_path)
     duration = info_["duration"]
@@ -89,6 +110,7 @@ def _missing_provider_message() -> str:
         "Option recommandée (locale, gratuite, hors-ligne) :\n"
         "  pip install faster-whisper\n\n"
         "Autres options :\n"
+        "  pip install pywhispercpp               # whisper.cpp (modèle ggml local)\n"
         "  pip install openai-whisper            # Whisper OpenAI local\n"
         "  export OPENAI_API_KEY=...             # API OpenAI (payante)\n"
         "  export GROQ_API_KEY=...               # API Groq (rapide, offre gratuite)\n"
@@ -105,6 +127,9 @@ def _local_transcribe(
     vad: bool,
 ) -> dict[str, Any]:
     language = _normalize_language(language)
+    if provider == "whispercpp":
+        return _whispercpp_transcribe(media, model_name, language,
+                                       word_timestamps=word_timestamps)
     if provider == "faster-whisper":
         try:
             from faster_whisper import WhisperModel  # type: ignore
@@ -174,6 +199,71 @@ def _local_transcribe(
         })
     return {"language": result.get("language") or language,
             "duration": None, "segments": segments}
+
+
+def _whispercpp_model_path(model_name: str, *, missing_ok: bool = False) -> Path | None:
+    """Résout le fichier ggml : chemin direct, ``WHISPERCPP_MODEL``, ``~/models``, repli tiny.
+
+    Les fichiers de moins de 1 Mo sont ignorés (ce sont des pointeurs Git LFS,
+    pas des modèles).
+    """
+    candidates: list[Path] = []
+    if model_name:
+        candidates.append(Path(model_name).expanduser())
+    env = os.environ.get("WHISPERCPP_MODEL")
+    if env:
+        candidates.append(Path(env).expanduser())
+    size_name = (model_name or "small").strip().lower()
+    size_name = size_name.removeprefix("ggml-").removesuffix(".bin")
+    for base in (Path.home() / "models", Path("models"), Path.home() / ".cache" / "whisper"):
+        candidates.append(base / f"ggml-{size_name}.bin")
+    candidates.append(Path.home() / "models" / "ggml-tiny.bin")
+    for candidate in candidates:
+        try:
+            if candidate.is_file() and candidate.stat().st_size > 1_000_000:
+                return candidate
+        except OSError:
+            continue
+    if missing_ok:
+        return None
+    raise SkillError(
+        "Aucun modèle ggml trouvé pour whispercpp.\n"
+        "Place un modèle dans ~/models/ggml-<taille>.bin, définis WHISPERCPP_MODEL, "
+        "ou passe --model /chemin/vers/ggml-base.bin."
+    )
+
+
+def _whispercpp_transcribe(
+    media: Path,
+    model_name: str,
+    language: str | None,
+    *,
+    word_timestamps: bool,
+) -> dict[str, Any]:
+    try:
+        from pywhispercpp.model import Model as WhisperCppModel  # type: ignore
+    except Exception as exc:  # pragma: no cover - dépend de l'installation
+        raise SkillError(f"pywhispercpp non importable : {exc}") from exc
+    model_file = _whispercpp_model_path(model_name)
+    assert model_file is not None  # garanti hors missing_ok
+    info(f"Chargement de whisper.cpp « {model_file.name} »…")
+    from .transcript import distribute_words
+
+    with tempfile.TemporaryDirectory(prefix="vesk-whispercpp-") as tmp:
+        wav = extract_audio(media, Path(tmp) / "audio.wav")
+        cpp = WhisperCppModel(str(model_file), print_realtime=False,
+                              print_progress=False, print_timestamps=False)
+        raw_segments = cpp.transcribe(str(wav), language=language or "auto")
+    segments: list[dict[str, Any]] = []
+    for index, seg in enumerate(raw_segments, start=1):
+        start = round(float(seg.t0) / 100.0, 3)
+        end = round(float(seg.t1) / 100.0, 3)
+        text = str(seg.text).strip()
+        words = distribute_words(text.split(), start, end) \
+            if (word_timestamps and text) else []
+        segments.append({"id": index, "start": start, "end": end,
+                         "text": text, "words": words})
+    return {"language": language, "duration": None, "segments": segments}
 
 
 def _normalize_language(language: str | None) -> str | None:

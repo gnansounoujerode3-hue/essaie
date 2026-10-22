@@ -1,4 +1,4 @@
-# VESK — installe les 19 skills de montage vidéo (Windows PowerShell).
+# VESK — installe les 20 skills (19 de montage vidéo + find-skills) (Windows PowerShell).
 #
 #   .\scripts\install.ps1
 #   .\scripts\install.ps1 -Mode link -Target C:\skills

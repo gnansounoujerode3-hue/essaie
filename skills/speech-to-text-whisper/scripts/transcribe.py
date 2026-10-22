@@ -68,7 +68,7 @@ def run() -> int:
                         help="Formats : json,srt,vtt,txt,md")
     parser.add_argument("--language", default=None, help="fr, en, auto…")
     parser.add_argument("--provider", default="auto",
-                        choices=["auto", "faster-whisper", "whisper", "openai", "groq"])
+                        choices=["auto", "faster-whisper", "whispercpp", "whisper", "openai", "groq"])
     parser.add_argument("--model", default="small",
                         help="tiny, base, small, medium, large-v3 (ou whisper-1 / whisper-large-v3 en API)")
     parser.add_argument("--no-word-timestamps", action="store_true",
