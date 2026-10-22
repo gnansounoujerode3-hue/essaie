@@ -96,7 +96,7 @@ echo "▸ Rétention et habillage…"
 "$PY" "$ROOT/skills/retention-chart-analyzer/scripts/analyze_retention.py" \
   --csv "$ROOT/examples/retention.csv" --md "$OUT/retention.md" >/dev/null
 "$PY" "$ROOT/skills/motion-design-templates/scripts/motion.py" \
-  --template title --text "Démo VESK" --subtitle "19 skills, zéro plug-in" \
+  --template title --text "Démo VESK" --subtitle "20 skills, zéro plug-in" \
   --out "$OUT/titre.ass" >/dev/null
 
 echo

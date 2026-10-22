@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "language": "fr",
+  "leaderboard": "https://skills.sh/",
+  "upstream": "Adapté du skill « find-skills » de vercel-labs/skills (MIT) : https://skills.sh/vercel-labs/skills/find-skills",
+  "trusted_sources": [
+    {
+      "name": "Vercel Labs — agent-skills",
+      "repo": "vercel-labs/agent-skills",
+      "note": "React, Next.js, web design — skills parmi les plus installés (100K+)."
+    },
+    {
+      "name": "Anthropic — skills",
+      "repo": "anthropics/skills",
+      "note": "Skills officiels Anthropic : design front-end, documents, etc. (100K+)."
+    },
+    {
+      "name": "Vercel Labs — skills",
+      "repo": "vercel-labs/skills",
+      "note": "La Skills CLI elle-même et ce skill find-skills."
+    },
+    {
+      "name": "Composio — awesome-claude-skills",
+      "repo": "ComposioHQ/awesome-claude-skills",
+      "note": "Collection communautaire très fournie : vérifier chaque skill individuellement."
+    }
+  ],
+  "quality_checklist": [
+    "Installations : préférer 1 000+ ; rester prudent sous 100.",
+    "Source : un éditeur connu (vercel-labs, anthropics, microsoft…) vaut mieux qu'un auteur inconnu.",
+    "Étoiles GitHub du dépôt source : sous 100, traiter le skill avec scepticisme.",
+    "Lire le SKILL.md avant d'installer : commandes exécutées, accès réseau, clés API demandées.",
+    "Ne jamais recommander un skill sur le seul résultat de recherche : vérifier ces trois signaux d'abord."
+  ],
+  "categories": [
+    {
+      "id": "video",
+      "label": "Vidéo & montage",
+      "keywords": ["video", "montage", "sous-titre", "sous titres", "ffmpeg", "premiere", "after effects", "resolve", "davinci", "clip", "short", "tiktok", "reels", "transcription", "transcrire", "b-roll", "broll", "audio", "mixage", "hook", "accroche", "retention"],
+      "queries": ["video editing", "ffmpeg", "subtitles captions", "video transcription"]
+    },
+    {
+      "id": "web-dev",
+      "label": "Développement web",
+      "keywords": ["react", "nextjs", "next.js", "typescript", "css", "tailwind", "site web", "frontend", "front-end", "performance web", "vue", "svelte"],
+      "queries": ["react", "nextjs", "typescript", "css tailwind"]
+    },
+    {
+      "id": "testing",
+      "label": "Tests",
+      "keywords": ["test", "tests", "jest", "playwright", "e2e", "unitaire", "qualite logicielle"],
+      "queries": ["testing", "jest", "playwright e2e"]
+    },
+    {
+      "id": "devops",
+      "label": "DevOps & déploiement",
+      "keywords": ["deploiement", "deploy", "docker", "kubernetes", "ci-cd", "ci/cd", "infrastructure", "serveur"],
+      "queries": ["deploy", "docker", "kubernetes", "ci-cd"]
+    },
+    {
+      "id": "documentation",
+      "label": "Documentation",
+      "keywords": ["documentation", "docs", "readme", "changelog", "api docs", "rediger"],
+      "queries": ["docs", "readme", "changelog", "api-docs"]
+    },
+    {
+      "id": "code-quality",
+      "label": "Qualité de code",
+      "keywords": ["revue de code", "code review", "pr review", "pull request", "lint", "refactor", "best practices", "bonnes pratiques"],
+      "queries": ["code review", "lint", "refactor", "best-practices"]
+    },
+    {
+      "id": "design",
+      "label": "Design & accessibilité",
+      "keywords": ["design", "ui", "ux", "design system", "accessibilite", "interface", "maquette"],
+      "queries": ["ui ux", "design-system", "accessibility"]
+    },
+    {
+      "id": "productivity",
+      "label": "Productivité & automatisation",
+      "keywords": ["automatisation", "automatiser", "workflow", "git", "productivite", "organisation"],
+      "queries": ["workflow", "automation", "git"]
+    }
+  ]
+}

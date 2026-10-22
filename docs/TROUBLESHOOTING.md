@@ -136,7 +136,7 @@ fichier contient `NaN`, le relire avec `json.loads(..., parse_constant=…)` ou 
 ## Diagnostic global
 
 ```bash
-bash scripts/selftest.sh          # 38 contrôles + pipeline réelle
+bash scripts/selftest.sh          # 39 contrôles + pipeline réelle
 python3 -m unittest discover -s tests -v
 ```
 

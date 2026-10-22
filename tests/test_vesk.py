@@ -33,6 +33,10 @@ from vesk.nle_premiere import (file_url, jsx_import_plan,  # noqa: E402
 from vesk.retention import analyze_file, find_events  # noqa: E402
 from vesk.retention import load_retention_csv, resample  # noqa: E402
 from vesk.sfx import detect_cues  # noqa: E402
+from vesk.skillfinder import (add_command, build_search_plan,  # noqa: E402
+                              discover_local_skills, find_command, load_catalog,
+                              parse_skill_md, plan_markdown,
+                              search_local_skills, suggest_queries)
 from vesk.transcript import (distribute_words, ensure_word_timings,  # noqa: E402
                              parse_srt, to_srt, trim_to_range)
 
@@ -320,7 +324,7 @@ class SFXTests(unittest.TestCase):
 class InstallTests(unittest.TestCase):
     def test_all_skills_documented(self):
         skills = sorted(p for p in (ROOT / "skills").iterdir() if p.is_dir())
-        self.assertEqual(len(skills), 19)
+        self.assertEqual(len(skills), 20)
         for skill in skills:
             content = (skill / "SKILL.md").read_text(encoding="utf-8")
             self.assertTrue(content.startswith("---"), skill.name)
@@ -336,6 +340,62 @@ class InstallTests(unittest.TestCase):
                 continue
             with self.subTest(path=path.name):
                 json.loads(path.read_text(encoding="utf-8"))
+
+
+class SkillFinderTests(unittest.TestCase):
+    def test_parse_skill_md(self):
+        front = parse_skill_md(
+            "---\nname: demo\ndescription: \"Un skill de démonstration\"\n"
+            "license: MIT\n---\n\n# Titre\n")
+        self.assertEqual(front["name"], "demo")
+        self.assertEqual(front["description"], "Un skill de démonstration")
+        self.assertEqual(parse_skill_md("pas de frontmatter"), {})
+
+    def test_catalog_and_queries(self):
+        catalog = load_catalog()
+        ids = [category["id"] for category in catalog["categories"]]
+        self.assertIn("video", ids)
+        self.assertTrue(catalog["trusted_sources"])
+        queries = suggest_queries("je veux des sous-titres animés", catalog)
+        self.assertIn("subtitles captions", queries)
+        react_queries = suggest_queries("mon app react est lente", catalog)
+        self.assertIn("react", react_queries)
+
+    def test_search_local_is_accent_insensitive(self):
+        skills = [
+            {"name": "animated-captions-generator",
+             "description": "Sous-titres animés style Hormozi", "path": "a"},
+            {"name": "music-beat-sync", "description": "BPM et grille de beats",
+             "path": "b"},
+        ]
+        results = search_local_skills("sous titres animes", skills)
+        self.assertEqual(results[0]["name"], "animated-captions-generator")
+        self.assertEqual(search_local_skills("le la pour", skills), [])
+
+    def test_discover_repo_skills(self):
+        skills = discover_local_skills([ROOT / "skills"])
+        self.assertEqual(len(skills), 20)
+        self.assertIn("find-skills", [skill["name"] for skill in skills])
+
+    def test_build_search_plan(self):
+        skills = discover_local_skills([ROOT / "skills"])
+        plan = build_search_plan("sous-titres", skills=skills)
+        self.assertTrue(plan["local_matches"])
+        self.assertTrue(all(cmd.startswith("npx skills find")
+                            for cmd in plan["online_commands"]))
+        self.assertIn("-g -y", plan["install_template"])
+        self.assertIn("npx skills add", plan_markdown(plan))
+        with self.assertRaises(SkillError):
+            build_search_plan("   ", skills=skills)
+
+    def test_cli_commands(self):
+        self.assertEqual(find_command("react performance"),
+                         "npx skills find react performance")
+        self.assertEqual(find_command("react", owner="vercel-labs"),
+                         "npx skills find react --owner vercel-labs")
+        self.assertEqual(add_command("a/b@c"), "npx skills add a/b@c -g -y")
+        self.assertEqual(add_command("a/b@c", global_install=False, yes=False),
+                         "npx skills add a/b@c")
 
 
 if __name__ == "__main__":

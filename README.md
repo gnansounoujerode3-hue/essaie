@@ -2,8 +2,9 @@
 
 [![CI](https://github.com/gnansounoujerode3-hue/essaie/actions/workflows/ci.yml/badge.svg)](https://github.com/gnansounoujerode3-hue/essaie/actions/workflows/ci.yml)
 
-**19 skills de montage vidéo automatisé** pour agents IA (Claude Code, Cursor, Codex…),
-en français, sans dépendance obligatoire hors **FFmpeg** et **Python 3.9+**.
+**19 skills de montage vidéo automatisé + 1 skill méta (`find-skills`)** pour agents IA
+(Claude Code, Cursor, Codex…), en français, sans dépendance obligatoire hors **FFmpeg**
+et **Python 3.9+**.
 
 Chaque skill est un dossier `skills/<nom>/` avec :
 - un `SKILL.md` au format Agent Skills (frontmatter `name` + `description`),
@@ -32,7 +33,7 @@ git clone <ce-repo> vesk && cd vesk
 ./scripts/install.sh --target ~/.config/agents/skills \
   --only animated-captions-generator,silence-removal-automation
 
-# Vérifier que tout fonctionne (38 contrôles + mini-pipeline)
+# Vérifier que tout fonctionne (39 contrôles + mini-pipeline)
 ./scripts/selftest.sh
 
 # Voir le pack à l'œuvre sur un rush généré automatiquement
@@ -71,7 +72,7 @@ automatiquement (variable `FFMPEG_BIN` pour forcer un chemin).
 
 ---
 
-## 2. Les 19 skills
+## 2. Les 20 skills
 
 ### 1 · Dérushage, analyse & tri intelligents
 
@@ -122,6 +123,12 @@ automatiquement (variable `FFMPEG_BIN` pour forcer un chemin).
 | [`retention-chart-analyzer`](skills/retention-chart-analyzer/SKILL.md) | courbes YouTube, décrochages/pics, croisement avec la transcription |
 | [`viral-hooks-library`](skills/viral-hooks-library/SKILL.md) | 24 hooks, storyboard 3 s, sons/visuels, variantes A/B |
 
+### 7 · Écosystème & découverte
+
+| Skill | Rôle |
+|-------|------|
+| [`find-skills`](skills/find-skills/SKILL.md) | trouver le bon skill : recherche locale (déjà installé ?) puis skills.sh via `npx skills`, contrôle qualité (installations, source, étoiles) et installation. Adapté du skill amont `find-skills` de [vercel-labs/skills](https://skills.sh/vercel-labs/skills/find-skills) (MIT) |
+
 ---
 
 ## 3. Démarrage en 5 commandes
@@ -168,6 +175,7 @@ Toutes les commandes acceptent `--help` et `--dry-run` quand une action est dest
 | **Rendu DaVinci étalonné** | `davinci-resolve-python-api` (timeline + LUT + CDL + render) |
 | **Refonte d'une vidéo qui décroche** | `retention-chart-analyzer` → `viral-hooks-library` → réécriture du hook → re-montage |
 | **Habillage IA** | `ai-image-video-generator` (plan) → `broll-finder-indexer` (placement) → `motion-design-templates` |
+| **Capacité manquante** | `find-skills` (local d'abord, puis skills.sh) → `npx skills add <propriétaire>/<dépôt>@<skill> -g -y` |
 
 Détails et commandes exactes : [`docs/PIPELINES.md`](docs/PIPELINES.md).
 
@@ -177,7 +185,7 @@ Détails et commandes exactes : [`docs/PIPELINES.md`](docs/PIPELINES.md).
 
 ```
 vesk/
-├── skills/                     # 19 skills autonomes (SKILL.md + scripts/ + données)
+├── skills/                     # 20 skills autonomes (SKILL.md + scripts/ + données)
 │   └── <skill>/
 │       ├── SKILL.md            # frontmatter name/description + mode d'emploi
 │       ├── scripts/*.py        # CLI
@@ -199,10 +207,11 @@ vesk/
 │   ├── nle_premiere.py         # FCPXML / XMEML / EDL / JSX Premiere
 │   ├── nle_aftereffects.py     # JSX After Effects
 │   ├── davinci.py              # scripts Resolve
-│   └── imagegen.py             # prompts et exécution IA
+│   ├── imagegen.py             # prompts et exécution IA
+│   └── skillfinder.py          # découverte de skills (local + skills.sh)
 ├── scripts/install.sh|ps1      # installation
 ├── scripts/selftest.sh         # diagnostic + pipeline de bout en bout
-├── tests/                      # 34 tests unitaires (sans FFmpeg)
+├── tests/                      # 40 tests unitaires (sans FFmpeg)
 ├── examples/                   # plan de montage, rétention CSV, transcriptions
 └── docs/                       # pipelines, dépannage, exigences
 ```
@@ -269,11 +278,11 @@ variable d'environnement.
 ## 8. Tests et qualité
 
 ```bash
-python3 -m unittest discover -s tests -v    # 34 tests, sans FFmpeg
-bash scripts/selftest.sh                    # 38 contrôles + pipeline réelle
+python3 -m unittest discover -s tests -v    # 40 tests, sans FFmpeg
+bash scripts/selftest.sh                    # 39 contrôles + pipeline réelle
 ```
 
-Le selftest génère ses propres médias de test (lavfi), vérifie les 19 skills, les CLI,
+Le selftest génère ses propres médias de test (lavfi), vérifie les 20 skills, les CLI,
 la compilation, puis exécute transcription → cut → captions → burn → highlights →
 B-rolls → SFX → BPM → rétention → hooks → compression.
 
