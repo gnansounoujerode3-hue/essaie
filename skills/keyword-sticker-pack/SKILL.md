@@ -61,3 +61,7 @@ coup de sifflet→1f4ef, poignée→1f91d, message→1f4ac, horloge→23f0.
 position recalculée par phrase (les refs ne répètent jamais 3 fois le même coin).
 Voir `emoji-keyword-mapper` (sélection mot→emoji) et
 `caption-hierarchy-styles` (le sous-titre reste en hiérarchie blanche+accent).
+
+## Pack 3D (thème fluide)
+
+- `fluent3d/` — 8 emojis 3D Microsoft Fluent (MIT) 256x256 RGBA (key, brain, test_tube, bulb, money_bag, card, chart_down, bank). Choisir ce pack : `python3 scripts/plan_stickers.py plan.json --twemoji-dir skills/keyword-sticker-pack/fluent3d`. Toute commande ci-dessus accepte `--twemoji-dir` ; les PNG 2D de `twemoji/` restent le repli pour tous les autres emojis.

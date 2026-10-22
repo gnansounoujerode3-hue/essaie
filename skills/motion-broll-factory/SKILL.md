@@ -50,3 +50,9 @@ ffmpeg -i base.mp4 -i broll_money.mp4 -filter_complex \
 
 Complète `broll-finder-indexer` (B-réels libres, réseau requis) et
 `overlay-card-templates` (cartes stat posées SUR ce fond animé).
+
+## Scripts de ce skill
+
+- `scripts/gen_motion_broll.py` — B-roll procédural (money, marquee, orbit, particles) pur PIL → mp4.
+- `scripts/cutaway.py` — plan serré + lente poussée sur UNE fenêtre du propre rush (aucun réseau, licence clean) : `python3 scripts/cutaway.py rush.mp4 --t0 64.7 --t1 68.2 --zoom 1.7 --focus 0.5,0.35 -o cutaway.mp4`. Voir `python3 scripts/cutaway.py --help`.
+- `assets/photoreal/` — 4 photogrammes 1024x1536 IA (banque, argent, Toronto, cles) directement insérables : les boucler en `loop=1,enable=between(t,a,b)`.

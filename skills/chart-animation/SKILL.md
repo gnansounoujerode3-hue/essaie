@@ -185,3 +185,7 @@ npx remotion render out.mp4 # rendu
 bash scripts/probe-mp4.sh in.mp4   # sonde locale sans dépendance
 ```
 - `python3 scripts/remotion_check.py` — vérifie node/npx/ffmpeg et affiche les commandes
+
+## Scripts de ce skill
+
+- `scripts/bar_race.py` — animation de course de barres (bar-chart race) en pur PIL → mp4 1080x1920, sans Remotion ni Chromium. Exemples : `python3 scripts/bar_race.py --demo -o race.mp4` (5 séries générées) ; `python3 scripts/bar_race.py --data serie.csv --labels mois --cats janvier,fevrier --title "Classement" -o race.mp4`. Voir `python3 scripts/bar_race.py --help`.
