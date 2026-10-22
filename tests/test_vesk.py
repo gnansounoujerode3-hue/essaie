@@ -33,6 +33,7 @@ from vesk.nle_premiere import (file_url, jsx_import_plan,  # noqa: E402
 from vesk.retention import analyze_file, find_events  # noqa: E402
 from vesk.retention import load_retention_csv, resample  # noqa: E402
 from vesk.sfx import detect_cues  # noqa: E402
+from vesk.speech import _whispercpp_model_path  # noqa: E402
 from vesk.skillfinder import (add_command, build_search_plan,  # noqa: E402
                               discover_local_skills, find_command, load_catalog,
                               parse_skill_md, plan_markdown,
@@ -396,6 +397,22 @@ class SkillFinderTests(unittest.TestCase):
         self.assertEqual(add_command("a/b@c"), "npx skills add a/b@c -g -y")
         self.assertEqual(add_command("a/b@c", global_install=False, yes=False),
                          "npx skills add a/b@c")
+
+
+class SpeechTests(unittest.TestCase):
+    def test_whispercpp_model_resolution(self):
+        real = TMPDIR / "ggml-base.bin"
+        with open(real, "wb") as fh:  # fichier creux > 1 Mo (pas un pointeur LFS)
+            fh.truncate(2_000_000)
+        self.assertEqual(_whispercpp_model_path(str(real)), real)
+
+    def test_whispercpp_rejects_lfs_pointer(self):
+        pointer = TMPDIR / "ggml-small.bin"
+        pointer.write_text("version https://git-lfs.github.com/spec/v1\n",
+                           encoding="utf-8")
+        # un pointeur LFS (< 1 Mo) ne doit jamais être pris pour un modèle
+        resolved = _whispercpp_model_path(str(pointer), missing_ok=True)
+        self.assertNotEqual(resolved, pointer)
 
 
 if __name__ == "__main__":

@@ -25,6 +25,7 @@ plus SRT/VTT/TXT/Markdown lisibles.
 | Provider | Type | Installation | Remarques |
 |----------|------|--------------|-----------|
 | `faster-whisper` | local | `pip install faster-whisper` | **recommandé** : rapide, CPU OK, hors-ligne après téléchargement |
+| `whispercpp` | local | `pip install pywhispercpp` + fichier `ggml-*.bin` | whisper.cpp : aucun téléchargement de modèle par le code — idéal hors-ligne/restreint (`--model base` → `~/models/ggml-base.bin`, ou chemin direct) |
 | `whisper` | local | `pip install openai-whisper` | référence OpenAI, plus lent |
 | `openai` | API | `export OPENAI_API_KEY=…` | `whisper-1`, limite ~25 Mo par requête |
 | `groq` | API | `export GROQ_API_KEY=…` | `whisper-large-v3`, très rapide |

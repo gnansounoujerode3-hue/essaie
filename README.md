@@ -63,6 +63,7 @@ Windows (PowerShell) :
 | **FFmpeg** (avec libass) | oui pour la vidéo | `brew install ffmpeg-full` · `sudo apt install ffmpeg` · `winget install Gyan.FFmpeg` |
 | ffprobe | non | repli automatique sur `ffmpeg -i` |
 | faster-whisper | non | transcription locale — `pip install faster-whisper` |
+| pywhispercpp + modèle ggml | non | transcription locale sans téléchargement de modèle par le code — `pip install pywhispercpp` |
 | opencv-python-headless | non | suivi de visage / détection de plans |
 | torch + transformers + pillow | non | recherche sémantique CLIP |
 | clés API | non | OpenAI / Groq / ElevenLabs / Runway / Luma / Pexels / Pixabay |
@@ -176,6 +177,7 @@ Toutes les commandes acceptent `--help` et `--dry-run` quand une action est dest
 | **Refonte d'une vidéo qui décroche** | `retention-chart-analyzer` → `viral-hooks-library` → réécriture du hook → re-montage |
 | **Habillage IA** | `ai-image-video-generator` (plan) → `broll-finder-indexer` (placement) → `motion-design-templates` |
 | **Capacité manquante** | `find-skills` (local d'abord, puis skills.sh) → `npx skills add <propriétaire>/<dépôt>@<skill> -g -y` |
+| **Rush brut → vidéo finale** | chaîne combinée VESK + video-use + HyperFrames/Remotion : [`docs/MONTAGE-COMBINE.md`](docs/MONTAGE-COMBINE.md) |
 
 Détails et commandes exactes : [`docs/PIPELINES.md`](docs/PIPELINES.md).
 
@@ -211,7 +213,7 @@ vesk/
 │   └── skillfinder.py          # découverte de skills (local + skills.sh)
 ├── scripts/install.sh|ps1      # installation
 ├── scripts/selftest.sh         # diagnostic + pipeline de bout en bout
-├── tests/                      # 40 tests unitaires (sans FFmpeg)
+├── tests/                      # 42 tests unitaires (sans FFmpeg)
 ├── examples/                   # plan de montage, rétention CSV, transcriptions
 └── docs/                       # pipelines, dépannage, exigences
 ```
@@ -278,7 +280,7 @@ variable d'environnement.
 ## 8. Tests et qualité
 
 ```bash
-python3 -m unittest discover -s tests -v    # 40 tests, sans FFmpeg
+python3 -m unittest discover -s tests -v    # 42 tests, sans FFmpeg
 bash scripts/selftest.sh                    # 39 contrôles + pipeline réelle
 ```
 

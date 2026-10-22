@@ -5,6 +5,9 @@ fichiers, garder l'ordre des étapes.
 
 > Tous les scripts sont appelés par leur chemin. Si les skills sont installés dans
 > `~/.claude/skills`, remplacer `skills/` par `~/.claude/skills/<nom>/`.
+>
+> Pour un rush brut complet en combinant VESK avec video-use et
+> HyperFrames/Remotion, voir [`MONTAGE-COMBINE.md`](MONTAGE-COMBINE.md).
 
 ---
 

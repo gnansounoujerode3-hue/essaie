@@ -29,7 +29,7 @@ def add_transcript_args(parser: argparse.ArgumentParser, *,
         parser.add_argument("--media", "-m", help="Média source (transcrit si --transcript absent)")
     parser.add_argument("--language", default=None, help="Langue (fr, en, auto)")
     parser.add_argument("--provider", default="auto",
-                        choices=["auto", "faster-whisper", "whisper", "openai", "groq"],
+                        choices=["auto", "faster-whisper", "whispercpp", "whisper", "openai", "groq"],
                         help="Moteur de transcription si --media est utilisé")
     parser.add_argument("--model", default="small", help="Modèle Whisper (tiny, base, small, medium, large-v3)")
     parser.add_argument("--dry-run", action="store_true", help="Affiche les actions sans exécuter")
