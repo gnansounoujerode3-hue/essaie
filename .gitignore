@@ -40,3 +40,4 @@ library.json
 Thumbs.db
 .idea/
 .vscode/
+!skills/*/data/*.ass
