@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/gnansounoujerode3-hue/essaie/actions/workflows/ci.yml/badge.svg)](https://github.com/gnansounoujerode3-hue/essaie/actions/workflows/ci.yml)
 
-**20 skills de montage vidéo automatisé** pour agents IA (Claude Code, Cursor, Codex…),
+**32 skills de montage vidéo automatisé** pour agents IA (Claude Code, Cursor, Codex…),
 en français, sans dépendance obligatoire hors **FFmpeg** et **Python 3.9+**.
 
 Chaque skill est un dossier `skills/<nom>/` avec :
@@ -72,7 +72,7 @@ automatiquement (variable `FFMPEG_BIN` pour forcer un chemin).
 
 ---
 
-## 2. Les 20 skills
+## 2. Les 32 skills
 
 ### 1 · Dérushage, analyse & tri intelligents
 
@@ -131,6 +131,24 @@ automatiquement (variable `FFMPEG_BIN` pour forcer un chemin).
 
 ---
 
+
+### 9 · Dernière vague — imports MIT & cartes (couvre la liste « ce qui manque » des 7 refs)
+
+| Skill | Rôle (manque comblé) |
+|-------|----------------------|
+| [`caption-hierarchy-styles`](skills/caption-hierarchy-styles/SKILL.md) | **P0** base blanche + 1 mot-clé accent par phrase, lint ASS (bug chemin vectoriel), hook burst 3 s |
+| [`overlay-card-templates`](skills/overlay-card-templates/SKILL.md) | **P1** scènes texte plein cadre, cartes stats chiffrées, mockups DM/téléphone/pill (PIL → PNG) |
+| [`keyword-sticker-pack`](skills/keyword-sticker-pack/SKILL.md) | **P1** pops d'objets (clé/cerveau/potion) + bulles d'icônes près du visage, plan FFmpeg généré |
+| [`motion-broll-factory`](skills/motion-broll-factory/SKILL.md) | **P1** B-roll animés : billets qui tombent, marquee vertical, orbite construite, particules |
+| [`cta-loop-pack`](skills/cta-loop-pack/SKILL.md) | **P2** follow surligné, commentaire mot-clé, carte-question, pilule, boucle de fin |
+| [`ffmpeg-skill`](skills/ffmpeg-skill/SKILL.md) | **P1/P2** 50 outils FFmpeg (grade/LUT, overlay, speed ramp, scenes, crop, insert…) — import kajisho5/ffmpeg-skill |
+| [`ghost-editor`](skills/ghost-editor/SKILL.md) | **P1/P2** talking-head : punch-ins, transitions, grade film, sous-titres face-safe, recettes — import kurbaitaev/ghost-editor |
+| [`heditor`](skills/heditor/SKILL.md) | **P1/P2** vertical créatif : captions, lower thirds, cartes intro/fin, rendu segmenté — import pycodebr/heditor |
+| [`herk-edit-kit`](skills/herk-edit-kit/SKILL.md) | **P2** styles de marque, templates de titres, beat-sync, préflight — import nateherkai/herk-edit-kit |
+| [`caption-animation`](skills/caption-animation/SKILL.md) | **P0/P2** recettes d'animation de captions (timings/mots) — import iart-ai/tiktok-video-skills |
+| [`short-form-video`](skills/short-form-video/SKILL.md) | **P2** structure de short : hook, rythme, arc — import iart-ai/tiktok-video-skills |
+| [`chart-animation`](skills/chart-animation/SKILL.md) | **P1** data-viz animée (bar chart race, chiffres) — import iart-ai/data-animation-skills |
+
 ## 3. Démarrage en 5 commandes
 
 ```bash
@@ -185,7 +203,7 @@ Détails et commandes exactes : [`docs/PIPELINES.md`](docs/PIPELINES.md).
 
 ```
 vesk/
-├── skills/                     # 20 skills autonomes (SKILL.md + scripts/ + données)
+├── skills/                     # 32 skills autonomes (SKILL.md + scripts/ + données)
 │   └── <skill>/
 │       ├── SKILL.md            # frontmatter name/description + mode d'emploi
 │       ├── scripts/*.py        # CLI
@@ -281,7 +299,7 @@ python3 -m unittest discover -s tests -v    # 34 tests, sans FFmpeg
 bash scripts/selftest.sh                    # 39 contrôles + pipeline réelle
 ```
 
-Le selftest génère ses propres médias de test (lavfi), vérifie les 20 skills, les CLI,
+Le selftest génère ses propres médias de test (lavfi), vérifie les 32 skills, les CLI,
 la compilation, puis exécute transcription → cut → captions → burn → highlights →
 B-rolls → SFX → BPM → rétention → hooks → compression.
 

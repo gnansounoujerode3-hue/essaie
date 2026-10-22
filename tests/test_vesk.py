@@ -320,7 +320,7 @@ class SFXTests(unittest.TestCase):
 class InstallTests(unittest.TestCase):
     def test_all_skills_documented(self):
         skills = sorted(p for p in (ROOT / "skills").iterdir() if p.is_dir())
-        self.assertEqual(len(skills), 20)
+        self.assertEqual(len(skills), 32)
         for skill in skills:
             content = (skill / "SKILL.md").read_text(encoding="utf-8")
             self.assertTrue(content.startswith("---"), skill.name)

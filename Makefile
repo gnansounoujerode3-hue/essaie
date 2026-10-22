@@ -6,7 +6,7 @@ TARGET ?= $(HOME)/.claude/skills
 .PHONY: help install link test validate selftest demo clean
 
 help:
-	@echo "make install    installe les 20 skills dans $(TARGET)"
+	@echo "make install    installe les 32 skills dans $(TARGET)"
 	@echo "make link       installe par liens symboliques (mise à jour instantanée)"
 	@echo "make test       tests unitaires (sans FFmpeg)"
 	@echo "make validate   vérifie les SKILL.md et exécute chaque CLI en --help"

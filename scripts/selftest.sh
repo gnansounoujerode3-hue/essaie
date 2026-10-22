@@ -38,7 +38,7 @@ else
   bad "libass absent : les incrustations ASS échoueront (le reste fonctionne)"
 fi
 
-head_ "Skills (20)"
+head_ "Skills (32)"
 count=0
 for dir in "$ROOT"/skills/*/; do
   [ -f "$dir/SKILL.md" ] || continue
@@ -49,7 +49,7 @@ for dir in "$ROOT"/skills/*/; do
     bad "$(basename "$dir") — frontmatter invalide"
   fi
 done
-[[ $count -eq 20 ]] && ok "20 skills présents" || bad "$count skills trouvés (20 attendus)"
+[[ $count -eq 32 ]] && ok "32 skills présents" || bad "$count skills trouvés (32 attendus)"
 
 head_ "CLI"
 for script in "$ROOT"/skills/*/scripts/*.py; do
